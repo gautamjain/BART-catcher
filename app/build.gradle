@@ -1,0 +1,44 @@
+apply plugin: 'android'
+apply plugin: 'hugo'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+}
+
+dependencies {
+    // Support libraries
+    compile 'com.android.support:support-v4:19.0.1'
+    compile 'com.android.support:appcompat-v7:19.0.1'
+
+    // API related
+    compile 'com.octo.android.robospice:robospice:1.4.11'
+    compile 'com.octo.android.robospice:robospice-cache:1.4.11'
+    compile 'com.octo.android.robospice:robospice-retrofit:1.4.11'
+    compile 'org.apache.commons:commons-io:1.3.2'
+    compile 'org.apache.commons:commons-lang3:3.2.1'
+    compile 'com.squareup.retrofit:retrofit:1.5.0'
+    compile 'com.squareup.retrofit:converter-simplexml:1.5.0'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
