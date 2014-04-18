@@ -4,5 +4,6 @@
     <string name="app_name">BART</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="map_image">Map Image</string>
 
 </resources>
