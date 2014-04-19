@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:layout_alignParentTop="true"
-            android:src="@drawable/googlemap_placeholder"
+            android:src="@drawable/googlemap_placeholderp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"

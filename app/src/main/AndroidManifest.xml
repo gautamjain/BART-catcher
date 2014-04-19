@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.bartproject.app.StationSelect"
+            android:label="@string/title_activity_station_select" >
+        </activity>
+        <activity
+            android:name="com.bartproject.app.PreviousDestinations"
+            android:label="@string/title_activity_previous_destinations" >
+        </activity>
     </application>
 
 </manifest>
