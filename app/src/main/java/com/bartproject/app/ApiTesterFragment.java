@@ -89,7 +89,7 @@ public class ApiTesterFragment extends Fragment {
             // For example,  etdResponse.getArrivals()[0]
 
             Log.d(TAG, "TIME: " + etdResponse.getDate() + " " + etdResponse.getTime());
-            Log.d(TAG, "STATION: " + etdResponse.getStation());
+            Log.d(TAG, "STATION: " + etdResponse.getStationOrigin());
             Log.d(TAG, "URL: " + etdResponse.getUri());
             Log.d(TAG, etdResponse.toString());
             

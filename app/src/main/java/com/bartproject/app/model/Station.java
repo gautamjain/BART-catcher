@@ -2,9 +2,7 @@ package com.bartproject.app.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
-
 import java.util.List;
-
 
 // origin
 public class Station {
@@ -17,7 +15,7 @@ public class Station {
 
     //destination
     @ElementList(inline = true,name = "etd")
-    private List<Destination> destination;
+    private List<Destination> destinationList;
 
     public String getAbbr() {
         return abbr;
@@ -28,11 +26,11 @@ public class Station {
     }
 
     public List<Destination> getDestination() {
-        return destination;
+        return destinationList;
     }
 
-    public void setDestination(List<Destination> destination) {
-        this.destination = destination;
+    public void setDestination(List<Destination> destinationList) {
+        this.destinationList = destinationList;
     }
 
     public String getName() {
