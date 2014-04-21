@@ -5,6 +5,7 @@ import org.simpleframework.xml.ElementList;
 
 import java.util.List;
 
+
 // origin
 public class Station {
 
@@ -41,6 +42,5 @@ public class Station {
     public void setName(String name) {
         this.name = name;
     }
-
 
 }

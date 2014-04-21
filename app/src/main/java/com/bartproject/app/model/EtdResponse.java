@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root;
 // the etd response will give the destination in etd array
 
 // Create a method/file that will return the direction(N/S) given origin,destination
-@Root(name = "root",strict = false)
+@Root(name = "root", strict = false)
 
 public class EtdResponse {
 
@@ -53,7 +53,10 @@ public class EtdResponse {
         return stationOrigin;
     }
 
+
     public void setStationOrigin(Station stationOrigin) {
         this.stationOrigin = stationOrigin;
     }
+
+
 }
