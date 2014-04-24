@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bartproject.app.Station_List">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:text="Select station from Dropdown "
+        android:layout_gravity="left|top" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="310dp"
+        android:id="@+id/listView"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</FrameLayout>
