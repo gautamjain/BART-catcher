@@ -2,7 +2,6 @@ package com.bartproject.app.network;
 
 
 import com.bartproject.app.model.EtdResponse;
-import com.bartproject.app.model.FareResponse;
 import com.octo.android.robospice.persistence.CacheManager;
 import com.octo.android.robospice.persistence.exception.CacheCreationException;
 import com.octo.android.robospice.persistence.retrofit.RetrofitObjectPersisterFactory;
@@ -47,8 +46,8 @@ public class ApiService extends RetrofitSpiceService {
          * @param date (Optional) Specifies a date to use for calculating the fare. If not specified, the current date will be used. Format must be "mm/dd/yyyy".
          * @param key API registration key.
          */
-        @GET("/sched.aspx?cmd=fare")
-        FareResponse getFare(@Query("orig") String origStation, @Query("dest") String destStation, @Query("date") String date, @Query("key") String key);
+        //@GET("/sched.aspx?cmd=fare")
+       // FareResponse getFare(@Query("orig") String origStation, @Query("dest") String destStation, @Query("date") String date, @Query("key") String key);
 
     }
 

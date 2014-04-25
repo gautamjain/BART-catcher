@@ -28,7 +28,7 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.1'
-    compile 'com.android.support:appcompat-v7:19.0.1'
+    compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.octo.android.robospice:robospice:1.4.11'
     compile 'com.octo.android.robospice:robospice-cache:1.4.11'
     compile 'com.octo.android.robospice:robospice-retrofit:1.4.11'

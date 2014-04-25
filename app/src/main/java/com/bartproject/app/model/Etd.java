@@ -2,9 +2,12 @@ package com.bartproject.app.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import java.util.List;
 
-public class Destination {
+@Root(strict = false)
+public class Etd {
 
     @Element(name = "destination")
     private String destinationName;
@@ -13,7 +16,7 @@ public class Destination {
     private String abbrDest;
 
     //estimated time of departure towards this destination
-    @ElementList(inline = true,name = "estimate")
+    @ElementList(inline = true)
     private List<Estimate> estimateTimeOfDep;
 
     public String getDestinationName() {

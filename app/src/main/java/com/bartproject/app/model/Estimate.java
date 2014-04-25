@@ -1,10 +1,12 @@
 package com.bartproject.app.model;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  * Created by Anu on 4/19/14.
  */
+@Root(strict = false)
 public class Estimate {
 
     @Element
@@ -15,6 +17,10 @@ public class Estimate {
 
     @Element
     private String bikeflag;
+
+    @Element
+    private String hexcolor;
+
 
     public String getMinutes() {
         return minutes;

@@ -14,8 +14,8 @@ public class Station {
     private String abbr;
 
     //destination
-    @ElementList(inline = true,name = "etd")
-    private List<Destination> destinationList;
+    @ElementList(inline = true)
+    private List<Etd> etdList;
 
     public String getAbbr() {
         return abbr;
@@ -25,12 +25,8 @@ public class Station {
         this.abbr = abbr;
     }
 
-    public List<Destination> getDestination() {
-        return destinationList;
-    }
-
-    public void setDestination(List<Destination> destinationList) {
-        this.destinationList = destinationList;
+    public List<Etd> getEtdList() {
+        return etdList;
     }
 
     public String getName() {
