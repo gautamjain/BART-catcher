@@ -65,7 +65,7 @@ public class Station_List extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_station__select_list, container, false);
+        return inflater.inflate(R.layout.fragment_station_select_list, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -82,7 +82,7 @@ public class Station_List extends Fragment {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDestinationSelectedListener");
         }
     }
 
