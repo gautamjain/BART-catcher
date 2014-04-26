@@ -2,6 +2,7 @@ package com.bartproject.app.network;
 
 
 import com.bartproject.app.model.EtdResponse;
+import com.bartproject.app.model.StationsResponse;
 import com.octo.android.robospice.persistence.CacheManager;
 import com.octo.android.robospice.persistence.exception.CacheCreationException;
 import com.octo.android.robospice.persistence.retrofit.RetrofitObjectPersisterFactory;
@@ -48,6 +49,15 @@ public class ApiService extends RetrofitSpiceService {
          */
         //@GET("/sched.aspx?cmd=fare")
        // FareResponse getFare(@Query("orig") String origStation, @Query("dest") String destStation, @Query("date") String date, @Query("key") String key);
+
+        /**
+         *  Get a list of all of the BART stations.
+         *
+         * @param key API registration key.
+         */
+        @GET("/stn.aspx?cmd=stns")
+        StationsResponse getStations(@Query("key") String key);
+
 
     }
 

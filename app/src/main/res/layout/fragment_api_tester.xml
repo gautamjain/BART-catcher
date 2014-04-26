@@ -9,17 +9,27 @@
     tools:context="com.bartproject.app.ApiTesterFragment">
 
     <Button
-        android:id="@+id/btnFetch"
+        android:id="@+id/btnFetchEtd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fetch"/>
+        android:text="Fetch Etd"/>
+
+    <Button
+        android:id="@+id/btnFetchStations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btnFetchEtd"
+        android:text="Fetch Stations"/>
+
 
     <TextView
-        android:layout_below="@id/btnFetch"
+        android:layout_below="@id/btnFetchEtd"
         android:id="@+id/tvDebug"
-        android:text="@string/hello_world"
+        android:text="This is a temporary placeholder for API testing purposes.  Will be replaced with StationMapFragment later on."
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         />
+
 
 </RelativeLayout>

@@ -9,7 +9,6 @@ import org.simpleframework.xml.Root;
 
 // Create a method/file that will return the direction(N/S) given origin,destination
 @Root(name = "root", strict = false)
-
 public class EtdResponse {
 
     @Element

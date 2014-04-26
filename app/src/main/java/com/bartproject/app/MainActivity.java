@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity implements
         if (savedInstanceState == null) {
             // Add the three fragments for the main screen
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container_top, new StationMapFragment())
+                    .add(R.id.fragment_container_top, new ApiTesterFragment())
                     .add(R.id.fragment_container_middle, new NearestStationFragment())
                     .add(R.id.fragment_container_bottom, new FavoriteStationsGridFragment())
                     .commit();
