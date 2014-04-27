@@ -22,7 +22,14 @@
             android:id="@+id/textView_previous_Destination"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textSize="24dp"
+            android:gravity="left|top"
+            android:hint="Previous destination Text"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp" />
 
         <GridView
             android:layout_width="wrap_content"
@@ -30,6 +37,9 @@
             android:id="@+id/gridView"
             android:layout_below="@+id/textView_previous_Destination"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:numColumns="3"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp" />
     </RelativeLayout>
 </RelativeLayout>
