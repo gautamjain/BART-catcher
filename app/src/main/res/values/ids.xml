@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources><item name="tvStationTitle" type="id">Starting StationTitle</item><item name="lvNearestStationList" type="id"/><item name="imgTrainIcon" type="id"/><item name="imgColorIcon" type="id"/><item name="tvTrainDestNameItem" type="id"/><item name="tvArrivalTimeItem" type="id"/></resources>
