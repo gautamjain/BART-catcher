@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bartproject.app.model.EndlessScrollListener;
 import com.bartproject.app.model.Etd;
 import com.bartproject.app.model.EtdResponse;
 import com.bartproject.app.model.Station;
@@ -22,6 +21,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import hugo.weaving.DebugLog;
 
@@ -65,10 +65,10 @@ public class NearestStationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View nearestStationView = inflater.inflate(android.R.layout.fragment_nearest_station, container, false);
-        tvStationTitle = (TextView) nearestStationView.findViewById(android.R.id.tvStationTitle);
+        View nearestStationView = inflater.inflate(R.layout.fragment_nearest_station, container, false);
+        tvStationTitle = (TextView) nearestStationView.findViewById(R.id.tvStationTitle);
         lvNearestStationList =
-                (ListView)nearestStationView.findViewById(android.R.id.lvNearestStationList);
+                (ListView)nearestStationView.findViewById(R.id.lvNearestStationList);
 
         List <Etd> etdList1 = new ArrayList<Etd>();
 
@@ -126,29 +126,10 @@ public class NearestStationFragment extends Fragment {
             // attach the Etd list to ETD adapter
             // Each row of this list contains station_item list.
 
-            //List<Etd> etdList = etdResponse.getStationOrigin().getEtdList();// added this for endless
             adapter.clear();
-
             // addAll(collection) works only from version 11 and above
-            adapter.addAll(etdResponse.getStationOrigin().getEtdList());// --changed for endless
-            //adapter.addAll(etdList);
-            //adapter.notifyDataSetChanged();
+            adapter.addAll(etdResponse.getStationOrigin().getEtdList());
 
-            // attempt to do the scrolling feature. - need to work on it.not working
-            final Station s1 = new Station();
-            etdResponse.getStationOrigin();
-
-            lvNearestStationList.setOnScrollListener(new EndlessScrollListener() {
-                @Override
-                public void onLoadMore(int page, int totalItemsCount) {
-
-
-                    setStation(s1);
-                    adapter.notifyDataSetChanged();
-
-
-                }
-            });
         }
     }
 

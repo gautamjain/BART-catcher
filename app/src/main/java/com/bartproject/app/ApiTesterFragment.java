@@ -1,16 +1,5 @@
 package com.bartproject.app;
 
-import com.bartproject.app.model.Estimate;
-import com.bartproject.app.model.Etd;
-import com.bartproject.app.model.EtdResponse;
-import com.bartproject.app.model.Station;
-import com.bartproject.app.model.StationsResponse;
-import com.bartproject.app.network.GetArrivalTimesRequest;
-import com.bartproject.app.network.GetStationsRequest;
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
@@ -21,6 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bartproject.app.model.Estimate;
+import com.bartproject.app.model.Etd;
+import com.bartproject.app.model.EtdResponse;
+import com.bartproject.app.model.Station;
+import com.bartproject.app.model.StationsResponse;
+import com.bartproject.app.network.GetArrivalTimesRequest;
+import com.bartproject.app.network.GetStationsRequest;
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -131,6 +131,8 @@ public class ApiTesterFragment extends Fragment {
             for (Station s : stationsResponse.getStations()) {
                 appendLog(s.getAbbr() + " - " + s.getName());
             }
+
+            ((MainActivity) getActivity()).setStationsList(stationsResponse.getStations());
 
             Toast.makeText(getActivity(), "Success - see Logcat", Toast.LENGTH_SHORT).show();
 

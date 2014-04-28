@@ -7,10 +7,26 @@
     <!-- TODO: Update blank fragment layout for NearestStationFragment.
         Should include a ListView (arrival times) and a TextView (station title)
      -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="NearestStationFragment - should show arrival times for a given station" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|top"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="63dp"
+            android:id="@+id/tvStationTitle"
+            android:layout_gravity="center_horizontal"
+            android:text="Title"
+          />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lvNearestStationList" />
+
+    </LinearLayout>
 </FrameLayout>

@@ -1,11 +1,13 @@
 package com.bartproject.app;
 
-import com.bartproject.app.model.Station;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.bartproject.app.model.Station;
+
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements
@@ -30,6 +32,8 @@ public class MainActivity extends BaseActivity implements
         // - Calculate the closet station - e.g. Util.getClosestStation(Location loc)
         // - Get a the NearestStationFragment from the FragmentManager
         // - Call NearestStationFragment#setStation(station) to set the closest station
+
+
 
     }
 
@@ -62,5 +66,19 @@ public class MainActivity extends BaseActivity implements
         // about your trip (from the nearest station to given destination station).
 
         Toast.makeText(this, destination.getName() + " was selected!", Toast.LENGTH_LONG ).show();
+    }
+
+    // This func gives access to the middle fragment
+    // This function will be called once we get the location of the GPS co-ords
+    //
+    public void setStationsList(List<Station> stations) {
+        NearestStationFragment f = (NearestStationFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
+
+        int stationIndex = (int) (Math.random() * stations.size());
+
+        Station station = stations.get(stationIndex);
+        f.setStation(station);
+
     }
 }
