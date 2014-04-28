@@ -9,5 +9,7 @@
     <string name="title_activity_previous_destinations">Previous Destinations</string>
     <string name="select_station">Select Station</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="Favorite_Station_Text">Select your station from your favorites list</string>
+    <string name="Select_station_from_dropdown">Select from station list</string>
+    <string name="Select_station_from_previous_destinations">Select station from the list below </string>
 </resources>
