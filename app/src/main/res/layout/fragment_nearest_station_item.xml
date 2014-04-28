@@ -1,0 +1,43 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgTrainIcon"
+        android:layout_gravity="left|top"
+        android:visibility="visible"
+        android:src="@drawable/ic_launcher"
+        android:longClickable="false" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgColorIcon"
+        android:layout_toRightOf="@id/imgTrainIcon"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/imgTrainIcon"
+        android:visibility="visible"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTrainDestNameItem"
+        android:layout_toRightOf="@id/imgColorIcon"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/imgColorIcon" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvArrivalTimeItem"
+        android:layout_alignBottom="@id/tvTrainDestNameItem"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+
+</RelativeLayout>
