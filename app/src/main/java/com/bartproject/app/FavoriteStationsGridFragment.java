@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.GridView;
 
 
 /**
@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 public class FavoriteStationsGridFragment extends Fragment {
 
     private OnDestinationSelectedListener mListener;
+
+    private GridView gvFavorites;
+    private FavoritesAdapter adapter;
 
     public FavoriteStationsGridFragment() {
         // Required empty public constructor
@@ -43,8 +46,16 @@ public class FavoriteStationsGridFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_grid, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorite_grid, container, false);
+
+        gvFavorites = (GridView) view.findViewById(R.id.gvFavorites);
+        adapter = new FavoritesAdapter();
+        gvFavorites.setAdapter(adapter);
+
+        return view;
     }
+
+
 
     public void onDestinationSelected(Station destination) {
         // TODO: Report the selected destination back to the parent Activity (i.e. mListener).  May have to change arguments.
