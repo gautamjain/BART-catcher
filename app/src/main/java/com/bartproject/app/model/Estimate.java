@@ -3,6 +3,8 @@ package com.bartproject.app.model;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import android.graphics.Color;
+
 /**
  * Created by Anu on 4/19/14.
  */
@@ -44,6 +46,10 @@ public class Estimate {
 
     public void setBikeflag(String bikeflag) {
         this.bikeflag = bikeflag;
+    }
+
+    public int getColor() {
+        return Color.parseColor(hexcolor);
     }
 
 }

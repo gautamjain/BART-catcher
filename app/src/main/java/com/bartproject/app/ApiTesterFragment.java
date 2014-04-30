@@ -181,7 +181,7 @@ public class ApiTesterFragment extends Fragment {
             for (Etd etd : etdResponse.getStationOrigin().getEtdList()) {
                 appendLog("DEST: " + etd.getDestinationName() + " - " + etd.getAbbrDest());
 
-                for (Estimate e : etd.getEstimateTimeOfDep()) {
+                for (Estimate e : etd.getEstimatesList()) {
                     appendLog(e.getMinutes() + " minutes");
                 }
 

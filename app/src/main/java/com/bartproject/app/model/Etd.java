@@ -35,7 +35,7 @@ public class Etd {
         this.abbrDest = abbrDest;
     }
 
-    public List<Estimate> getEstimateTimeOfDep() {
+    public List<Estimate> getEstimatesList() {
         return estimateTimeOfDep;
     }
 
