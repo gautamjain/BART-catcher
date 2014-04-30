@@ -21,6 +21,12 @@
         android:layout_toRightOf="@id/btnFetchEtd"
         android:text="Fetch Stations"/>
 
+    <Button
+        android:id="@+id/btnSelectStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/btnFetchStations"
+        android:text="Select station"/>
 
     <TextView
         android:layout_below="@id/btnFetchEtd"

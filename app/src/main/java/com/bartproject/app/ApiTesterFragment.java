@@ -1,16 +1,5 @@
 package com.bartproject.app;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bartproject.app.model.Estimate;
 import com.bartproject.app.model.Etd;
 import com.bartproject.app.model.EtdResponse;
@@ -22,6 +11,18 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -32,6 +33,7 @@ public class ApiTesterFragment extends Fragment {
     TextView tvDebug;
     Button btnFetchEtd;
     Button btnFetchStations;
+    Button btnSelectStation;
 
     public ApiTesterFragment() {
     }
@@ -46,6 +48,7 @@ public class ApiTesterFragment extends Fragment {
 
         btnFetchEtd = (Button) rootView.findViewById(R.id.btnFetchEtd);
         btnFetchStations = (Button) rootView.findViewById(R.id.btnFetchStations);
+        btnSelectStation = (Button) rootView.findViewById(R.id.btnSelectStation);
 
         // Set on click listener.  Call fetch etd when the button is clicked.
         btnFetchEtd.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +63,16 @@ public class ApiTesterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 fetchStations();
+            }
+        });
+
+        // Set on click listenner. Open select station activity.
+        btnSelectStation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SelectStationActivity.class);
+                intent.putExtra(SelectStationActivity.EXTRA_TITLE, "Select a new station:");
+                startActivity(intent);
             }
         });
 

@@ -3,8 +3,8 @@
     package="com.bartproject.app" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -28,12 +28,19 @@
             android:name="com.bartproject.app.PreviousDestinations"
             android:label="@string/title_activity_previous_destinations" >
         </activity>
-        <service
-            android:name=".network.ApiService"
-            android:exported="false"/>
 
-        <meta-data android:name="com.google.android.gms.version"
+        <service
+            android:name="com.bartproject.app.network.ApiService"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.bartproject.app.SelectStationActivity"
+            android:label="@string/title_activity_select_station" >
+        </activity>
     </application>
 
 </manifest>

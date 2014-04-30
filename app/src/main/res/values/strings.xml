@@ -12,4 +12,6 @@
     <string name="Favorite_Station_Text">Select your station from your favorites list</string>
     <string name="Select_station_from_dropdown">Select from station list</string>
     <string name="Select_station_from_previous_destinations">Select station from the list below </string>
+    <string name="title_activity_select_station">SelectStationActivity</string>
+
 </resources>

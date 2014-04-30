@@ -61,4 +61,8 @@ public class Station {
         this.name = name;
     }
 
+    public String toString() {
+        return name;
+    }
+
 }
