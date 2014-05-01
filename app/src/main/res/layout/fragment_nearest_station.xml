@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bartproject.app.NearestStationFragment">
+    tools:context="com.bartproject.app.NearestStationFragment"
+    android:layout_margin="8dip">
 
     <!-- TODO: Update blank fragment layout for NearestStationFragment.
         Should include a ListView (arrival times) and a TextView (station title)
@@ -17,10 +18,13 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="63dp"
+            android:layout_height="wrap_content"
             android:id="@+id/tvStationTitle"
             android:layout_gravity="center_horizontal"
+            android:textSize="24dp"
+            android:textColor="#33B5E5"
             android:text="Title"
+            android:padding="5dp"
           />
 
         <ListView

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bartproject.app.FavoriteStationsGridFragment"
-    android:layout_margin="8dp">
+    android:layout_margin="8dip">
 
     <!-- TODO: Update blank fragment layout
         Should include a GridView (destinations) and a TextView (title - e.g. Where are you going?)
@@ -16,11 +16,7 @@
         android:textSize="24dp"
         android:textColor="#33B5E5"
         android:text="@string/Favorite_Station_Text"
-        android:padding="5dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp" />
+        android:padding="5dp"/>
 
     <GridView
         android:layout_width="wrap_content"
