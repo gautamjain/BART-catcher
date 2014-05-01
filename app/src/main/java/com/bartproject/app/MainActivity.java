@@ -1,11 +1,11 @@
 package com.bartproject.app;
 
+import com.bartproject.app.model.Station;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.bartproject.app.model.Station;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package com.bartproject.app;
 
+import com.bartproject.app.model.FavoriteStation;
 import com.bartproject.app.model.Station;
 
 import android.app.Activity;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -49,13 +52,20 @@ public class FavoriteStationsGridFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite_grid, container, false);
 
         gvFavorites = (GridView) view.findViewById(R.id.gvFavorites);
-        adapter = new FavoritesAdapter(getActivity());
+        adapter = new FavoritesAdapter(getActivity(), new ArrayList<FavoriteStation>(0));
         gvFavorites.setAdapter(adapter);
 
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        // Update adapter with favorites
+        adapter.clear();
+        adapter.addAll(FavoritesUtil.readFavorites(getActivity()));
+    }
 
     public void onDestinationSelected(Station destination) {
         // TODO: Report the selected destination back to the parent Activity (i.e. mListener).  May have to change arguments.

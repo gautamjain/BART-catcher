@@ -10,6 +10,11 @@ import java.util.List;
 @Root(strict = false)
 public class Station {
 
+    public Station(String name) {
+        // Dummy constructor for creating fake Stations (testing purposes)
+        this.name = name;
+    }
+
     @Element
     private String name;
 

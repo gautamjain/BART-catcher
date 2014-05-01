@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import com.bartproject.app.model.FavoriteStation;
+import com.bartproject.app.model.Station;
 
 import org.apache.commons.io.FileUtils;
 
@@ -36,6 +37,11 @@ public class FavoritesUtil {
             e.printStackTrace();
         }
 
+        // If no favorites exist, then generate some fake favorites and save for next time
+        if (favoriteStations.size() == 0) {
+            favoriteStations = generateAndSaveFakeStations(context);
+        }
+
         return favoriteStations;
     }
 
@@ -54,6 +60,25 @@ public class FavoritesUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<FavoriteStation> generateAndSaveFakeStations(Context context) {
+        FavoriteStation a = new FavoriteStation("Work", new Station("Powell St"));
+        FavoriteStation b = new FavoriteStation("Home", new Station("El Cerrito Plaza"));
+        FavoriteStation c = new FavoriteStation("Airport", new Station("SFO"));
+        FavoriteStation d = new FavoriteStation("Downtown", new Station("Downtown Berkeley"));
+
+        ArrayList<FavoriteStation> stations = new ArrayList<FavoriteStation>(4);
+        stations.add(a);
+        stations.add(b);
+        stations.add(c);
+        stations.add(d);
+
+        // Write the fake favorites to file (for next time)
+        saveFavorites(context, stations);
+
+        // Return fake favorites
+        return stations;
     }
 
 }
