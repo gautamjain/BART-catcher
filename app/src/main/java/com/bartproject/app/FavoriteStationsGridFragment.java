@@ -49,7 +49,7 @@ public class FavoriteStationsGridFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite_grid, container, false);
 
         gvFavorites = (GridView) view.findViewById(R.id.gvFavorites);
-        adapter = new FavoritesAdapter();
+        adapter = new FavoritesAdapter(getActivity());
         gvFavorites.setAdapter(adapter);
 
         return view;
