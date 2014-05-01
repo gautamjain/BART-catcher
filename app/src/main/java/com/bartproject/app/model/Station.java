@@ -15,6 +15,10 @@ public class Station {
         this.name = name;
     }
 
+    public Station() {
+        
+    }
+
     @Element
     private String name;
 
