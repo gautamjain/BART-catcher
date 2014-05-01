@@ -41,6 +41,8 @@ dependencies {
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
+    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    compile 'com.google.code.gson:gson:2.2.4'
 
     // JAR files
     compile fileTree(dir: 'libs', include: ['*.jar'])
