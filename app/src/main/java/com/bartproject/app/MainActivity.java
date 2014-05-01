@@ -54,10 +54,15 @@ public class MainActivity extends BaseActivity implements
      */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
+    // Read the list of stations from file and cache in memory
+    private List<Station> stationsList = StationsUtil.readStations(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (savedInstanceState == null) {
             // Add the three fragments for the main screen
             getSupportFragmentManager().beginTransaction()
@@ -221,6 +226,6 @@ public class MainActivity extends BaseActivity implements
         // - Get a the NearestStationFragment from the FragmentManager
         // - Call NearestStationFragment#setStation(station) to set the closest station
 
-        Station closestStation = Util.getClosestStation(location);
+        Station closestStation = Util.getClosestStation(location, stationsList);
     }
 }
