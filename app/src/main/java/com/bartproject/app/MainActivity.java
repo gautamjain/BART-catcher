@@ -54,14 +54,16 @@ public class MainActivity extends BaseActivity implements
      */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-    // Read the list of stations from file and cache in memory
-    private List<Station> stationsList = StationsUtil.readStations(this);
+    private List<Station> stationsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Read the list of stations from file and cache in memory
+        stationsList = StationsUtil.readStations(this);
 
         if (savedInstanceState == null) {
             // Add the three fragments for the main screen
