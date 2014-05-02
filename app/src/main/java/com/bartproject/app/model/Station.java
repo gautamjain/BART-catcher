@@ -28,6 +28,14 @@ public class Station {
     @Element(required = false)
     private Double gtfs_latitude;
 
+    public Double getGtfs_latitude() {
+        return gtfs_latitude;
+    }
+
+    public Double getGtfs_longitude() {
+        return gtfs_longitude;
+    }
+
     @Element(required = false)
     private Double gtfs_longitude;
 

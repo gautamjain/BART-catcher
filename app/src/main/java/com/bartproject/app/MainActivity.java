@@ -1,19 +1,18 @@
 package com.bartproject.app;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-
-import com.bartproject.app.model.Station;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.bartproject.app.model.Station;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 
 import java.util.List;
 
@@ -161,7 +160,7 @@ public class MainActivity extends BaseActivity implements
 
     // This func gives access to the middle fragment
     // This function will be called once we get the location of the GPS co-ords
-    //
+    // This method is for TESTING - remove this later
     public void setStationsList(List<Station> stations) {
         NearestStationFragment f = (NearestStationFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
@@ -229,5 +228,11 @@ public class MainActivity extends BaseActivity implements
         // - Call NearestStationFragment#setStation(station) to set the closest station
 
         Station closestStation = Util.getClosestStation(location, stationsList);
+
+        NearestStationFragment f = (NearestStationFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
+       // Station station = stations.get(stationIndex);
+        f.setStation(closestStation);
+
     }
 }

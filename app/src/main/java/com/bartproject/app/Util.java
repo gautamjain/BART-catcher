@@ -1,8 +1,8 @@
 package com.bartproject.app;
 
-import com.bartproject.app.model.Station;
-
 import android.location.Location;
+
+import com.bartproject.app.model.Station;
 
 import java.util.List;
 
@@ -14,7 +14,21 @@ public class Util {
         // Calculate distance to each station, using GPS coordinates.
         // Return station with the shortest distance.
 
-        return null;
+       float[] results = new float[3];
+        Station closestStation;
+        closestStation = stationsList.get(0);
+        float closestDistance = Float.MAX_VALUE;
+
+        for (Station s : stationsList) {
+            //appendLog(s.getAbbr() + " - " + s.getName());
+            Location.distanceBetween(location.getLatitude(),location.getLongitude(),s.getGtfs_latitude(),s.getGtfs_longitude(),results);
+
+            if (results[0] < closestDistance)
+                closestStation = s;
+
+        }
+
+        return closestStation;
     }
 
 }
