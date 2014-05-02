@@ -41,6 +41,10 @@
             android:name="com.bartproject.app.SelectStationActivity"
             android:label="@string/title_activity_select_station" >
         </activity>
+        <activity
+            android:name=".FavoriteStationActivity"
+            android:label="@string/title_activity_favorite_station" >
+        </activity>
     </application>
 
 </manifest>
