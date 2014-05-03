@@ -42,8 +42,12 @@
             android:label="@string/title_activity_select_station" >
         </activity>
         <activity
-            android:name=".FavoriteStationActivity"
+            android:name="com.bartproject.app.FavoriteStationActivity"
             android:label="@string/title_activity_favorite_station" >
+        </activity>
+        <activity
+            android:name="com.bartproject.app.SelectFavoriteStationActivity"
+            android:label="@string/title_activity_select_favorite_station" >
         </activity>
     </application>
 

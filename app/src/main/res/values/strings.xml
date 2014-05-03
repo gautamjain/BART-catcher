@@ -15,5 +15,6 @@
     <string name="title_activity_select_station">SelectStationActivity</string>
     <string name="title_activity_favorite_station">Favorite Station</string>
     <string name="add_favorite_station_button">Add Favorite</string>
+    <string name="title_activity_select_favorite_station">Select Favorite Station</string>
 
 </resources>
