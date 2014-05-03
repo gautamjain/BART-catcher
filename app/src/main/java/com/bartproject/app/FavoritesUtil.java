@@ -1,20 +1,20 @@
 package com.bartproject.app;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import android.content.Context;
 
 import com.bartproject.app.model.FavoriteStation;
 import com.bartproject.app.model.Station;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.io.FileUtils;
-
-import android.content.Context;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class FavoritesUtil {
 
