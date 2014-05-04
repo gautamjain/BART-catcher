@@ -1,16 +1,5 @@
 package com.bartproject.app;
 
-import com.bartproject.app.model.Estimate;
-import com.bartproject.app.model.Etd;
-import com.bartproject.app.model.EtdResponse;
-import com.bartproject.app.model.Station;
-import com.bartproject.app.model.StationsResponse;
-import com.bartproject.app.network.GetArrivalTimesRequest;
-import com.bartproject.app.network.GetStationsRequest;
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +12,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bartproject.app.model.Estimate;
+import com.bartproject.app.model.Etd;
+import com.bartproject.app.model.EtdResponse;
+import com.bartproject.app.model.Station;
+import com.bartproject.app.model.StationsResponse;
+import com.bartproject.app.network.GetArrivalTimesRequest;
+import com.bartproject.app.network.GetStationsRequest;
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -34,6 +34,7 @@ public class ApiTesterFragment extends Fragment {
     Button btnFetchEtd;
     Button btnFetchStations;
     Button btnSelectStation;
+    Button btnFilterStations;
 
     public ApiTesterFragment() {
     }
@@ -48,7 +49,9 @@ public class ApiTesterFragment extends Fragment {
 
         btnFetchEtd = (Button) rootView.findViewById(R.id.btnFetchEtd);
         btnFetchStations = (Button) rootView.findViewById(R.id.btnFetchStations);
+        btnFilterStations = (Button) rootView.findViewById(R.id.btnFilterStations);
         btnSelectStation = (Button) rootView.findViewById(R.id.btnSelectStation);
+
 
         // Set on click listener.  Call fetch etd when the button is clicked.
         btnFetchEtd.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +69,14 @@ public class ApiTesterFragment extends Fragment {
             }
         });
 
+        // Set on click listener.  Call fetch stations when the button is clicked.
+        /*btnFilterStations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterStations();
+            }
+        });*/
+
         // Set on click listenner. Open select station activity.
         btnSelectStation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +90,74 @@ public class ApiTesterFragment extends Fragment {
 
         return rootView;
     }
+
+    // For Testing Filter destination station
+    /*private void filterStations() {
+
+        String origin = "ASHB";
+        String destination = "RICH";
+        // Create a request object
+        GetDepartTrainHeadStationRequest request = new GetDepartTrainHeadStationRequest(origin,destination);
+
+        // Create a unique cache key
+        String cacheKey = request.createCacheKey();
+
+        // Execute the network request
+        // Set the cache duration for 10 seconds
+        ((MainActivity) getActivity()).getSpiceManager().execute(request, cacheKey,
+                DurationInMillis.ONE_SECOND * 10, new GetDepartTrainHeadStationRequestListener());
+
+
+    }*/
+
+    /*private class GetDepartTrainHeadStationRequestListener implements RequestListener<Depart> {
+
+        List<Etd> etdList;
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Log.e(TAG, "Error fetching arrival times.");
+            Log.e(TAG, spiceException.toString());
+
+            // TODO: Show some kind of error message inside of this fragment's listview/view
+        }
+
+        @Override
+        public void onRequestSuccess(Depart departResponse)
+        {
+            Log.i(TAG, "Fetching depart times successful");
+
+            // Request has a list of trips
+            //each trip has a list of leg order
+            // we are interested in only the first leg and no transfers
+            // get the trainHeadStationName from the first leg
+
+            List<Trip> tripInfo = departResponse.getSchedule().getRequest();
+
+
+            for (Trip t : tripInfo) {
+                List<Leg> legsInfo = t.getLegs();
+                String trainHeadStationName = legsInfo.get(0).getTrainHeadStation();
+
+                for (Etd e : etdList) {
+                    if (!e.getAbbrDest().equals(trainHeadStationName))
+                    {
+                        etdList.remove(e);
+                    }
+                }
+
+                //  Update the ListAdapter with the new data
+                adapter.notifyDataSetChanged();
+                // if it doesn't refresh itself then do the addAll
+                adapter.addAll(etdList);
+
+                // attach the Etd list to ETD adapter
+                // addAll(collection) works only from version 11 and above
+                //adapter.addAll(etdResponse.getStationOrigin().getEtdList());
+                //adapter.
+
+            }
+        }*/
 
     /**
      * Fetch button was pressed, execute network request

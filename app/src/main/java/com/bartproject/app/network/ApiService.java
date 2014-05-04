@@ -1,14 +1,15 @@
 package com.bartproject.app.network;
 
 
+import android.app.Application;
+
+import com.bartproject.app.model.Depart;
 import com.bartproject.app.model.EtdResponse;
 import com.bartproject.app.model.StationsResponse;
 import com.octo.android.robospice.persistence.CacheManager;
 import com.octo.android.robospice.persistence.exception.CacheCreationException;
 import com.octo.android.robospice.persistence.retrofit.RetrofitObjectPersisterFactory;
 import com.octo.android.robospice.retrofit.RetrofitSpiceService;
-
-import android.app.Application;
 
 import java.io.File;
 
@@ -57,6 +58,20 @@ public class ApiService extends RetrofitSpiceService {
          */
         @GET("/stn.aspx?cmd=stns")
         StationsResponse getStations(@Query("key") String key);
+
+
+        /**
+         *  Get a list of all of the trainHead list from the depart command
+         *  This command contains the leg order for each trip.
+         *  In version 1, transfers not considered, only 1st leg is included
+         *
+         *
+         * @param station1, station2 Specifies the station. Stations are referenced by their four character abbreviations.
+         * @param key API registration key.
+         */
+        @GET("/sched.aspx?cmd=depart")
+        Depart getDepartTrain(@Query("orig") String station1,@Query("dest") String station2,@Query("key") String key);
+
 
 
     }

@@ -50,5 +50,16 @@
         android:textSize="18dp"
         android:text="10 minutes"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/tvTrainDestNameItem"
+        android:layout_alignStart="@+id/tvTrainDestNameItem"
+        android:layout_marginBottom="85dp" />
+
+
+
 
 </RelativeLayout>
