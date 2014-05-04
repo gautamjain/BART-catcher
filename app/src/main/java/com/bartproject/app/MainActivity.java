@@ -180,12 +180,18 @@ public class MainActivity extends BaseActivity implements
         NearestStationFragment f = (NearestStationFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
 
+        // Generatoe a random number
         int stationIndex = (int) (Math.random() * stations.size());
 
+        Station destination = new Station();
+        destination.setAbbr("RICH");
+
+        // Select a random station from the list of stations
         Station station = stations.get(stationIndex);
         f.setStation(station);
-
+        f.setDestinationStation(station, destination);
     }
+
 
 
     /*
@@ -231,6 +237,7 @@ public class MainActivity extends BaseActivity implements
         // for testing : remove this later
         Station destination = new Station();
         destination.setAbbr("RICH");
+
         // Report to the UI that the location was updated
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
@@ -252,6 +259,6 @@ public class MainActivity extends BaseActivity implements
                 getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
        // Station station = stations.get(stationIndex);
         f.setStation(closestStation);
-        //f.setDestinationStation(closestStation,destination);
+        f.setDestinationStation(closestStation,destination);
     }
 }

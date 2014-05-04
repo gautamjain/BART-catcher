@@ -51,7 +51,7 @@ public class SelectStationActivity extends BaseActivity {
                 Intent data = new Intent();
 
                 data.putExtra(ITEM_STATION, adapter.getItem(position));
-//                data.putExtra("ITEM_POSITION", )
+
                 setResult(RESULT_OK, data);
                 finish();
             }

@@ -1,6 +1,7 @@
 package com.bartproject.app.model;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Root;
 
 /**
  * Created by Anu on 4/24/14.
@@ -9,15 +10,16 @@ import org.simpleframework.xml.Attribute;
  * leg order is the stations along the way
  * question: do we need time here???
  */
+@Root(strict=false)
 public class Leg {
 
-    @Attribute
+    @Attribute(required = false)
     private String order;
 
-    @Attribute
+    @Attribute(required = false)
     private String origin;
 
-    @Attribute
+    @Attribute(required = false)
     private String destination;
 
     public String getOrigin() {
@@ -84,22 +86,22 @@ public class Leg {
         this.trainIdx = trainIdx;
     }
 
-    @Attribute
+    @Attribute(required = false)
     private String origTimeDate;
 
-    @Attribute
+    @Attribute(required = false)
     private String destTimeDate;
 
-    @Attribute
+    @Attribute(required = false)
     private String bikeFlag;
 
     @Attribute(name = "line")
     private String routeNum;
 
-    @Attribute
+    @Attribute(required = false)
     private String trainHeadStation;
 
-    @Attribute
+    @Attribute(required = false)
     private String trainIdx;
 
     public String getOrder() {

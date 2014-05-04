@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bartproject.app.model.Depart;
 import com.bartproject.app.model.Etd;
@@ -43,7 +42,7 @@ public class NearestStationFragment extends Fragment
     private ListView lvNearestStationList;
     private EtdAdapter adapter;
     List<Etd> etdList;
-    List<String> trainHeadStationNames;
+    List<String> trainHeadStationNames = new ArrayList<String>(0);
 
     /**
      * Use this factory method to create a new instance of
@@ -88,17 +87,17 @@ public class NearestStationFragment extends Fragment
     // returns an arraylist of trainHeadStation list
     public void setDestinationStation(Station origin,Station destStation)
     {
-        Toast.makeText(getActivity(), "inside set DestinationStation: the destinationstation", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), destStation.getName(), Toast.LENGTH_SHORT).show();
-
-        Toast.makeText(getActivity(), "inside set DestinationStation: the originstation", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), origin.getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "inside set DestinationStation: the destinationstation", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), destStation.getName(), Toast.LENGTH_SHORT).show();
+//
+//        Toast.makeText(getActivity(), "inside set DestinationStation: the originstation", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), origin.getName(), Toast.LENGTH_SHORT).show();
 
 
 
         // Create a request object from depart cmd for the TrainHeadStation info.
         GetDepartTrainHeadStationRequest request =
-                new GetDepartTrainHeadStationRequest(origin.getAbbr(),destStation.getAbbr());
+                new GetDepartTrainHeadStationRequest(origin.getAbbr(), destStation.getAbbr());
 
 
         // Create a unique cache key
@@ -186,13 +185,12 @@ public class NearestStationFragment extends Fragment
         // Code below was copy/pasted from ApiTesterFragment.  NEEDS to be reviewed.
 
         // anu- test statement remove it later
-        Toast.makeText(getActivity(), "inside set station of nearestStnFragment", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getActivity(), station.getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "inside set station of nearestStnFragment", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), station.getName(), Toast.LENGTH_SHORT).show();
 
 
         // Create a request object - showing the etd station.
         GetArrivalTimesRequest request = new GetArrivalTimesRequest(station.getAbbr());
-        //GetStationsRequest request = new GetStationsRequest();
 
         // Create a unique cache key
         String cacheKey = request.createCacheKey();
