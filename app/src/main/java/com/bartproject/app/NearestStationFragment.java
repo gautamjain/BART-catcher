@@ -10,18 +10,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bartproject.app.model.Depart;
 import com.bartproject.app.model.Etd;
 import com.bartproject.app.model.EtdResponse;
+import com.bartproject.app.model.Leg;
 import com.bartproject.app.model.Station;
+import com.bartproject.app.model.Trip;
 import com.bartproject.app.network.EtdAdapter;
 import com.bartproject.app.network.GetArrivalTimesRequest;
+import com.bartproject.app.network.GetDepartTrainHeadStationRequest;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 import hugo.weaving.DebugLog;
 
@@ -31,13 +34,16 @@ import hugo.weaving.DebugLog;
  * The 'middle' fragment on our main screen.  Shows the train arrival times at a particular station.
  *
  */
-public class NearestStationFragment extends Fragment {
+public class NearestStationFragment extends Fragment
+{
 
     public static final String TAG = NearestStationFragment.class.getSimpleName();
 
     private TextView tvStationTitle;
     private ListView lvNearestStationList;
     private EtdAdapter adapter;
+    List<Etd> etdList;
+    List<String> trainHeadStationNames;
 
     /**
      * Use this factory method to create a new instance of
@@ -50,6 +56,7 @@ public class NearestStationFragment extends Fragment {
         NearestStationFragment fragment = new NearestStationFragment();
         return fragment;
     }*/
+
     public NearestStationFragment() {
         // Required empty public constructor
     }
@@ -78,7 +85,103 @@ public class NearestStationFragment extends Fragment {
     }
 
     @DebugLog
-    public void setStation(Station station) {
+    // returns an arraylist of trainHeadStation list
+    public void setDestinationStation(Station origin,Station destStation)
+    {
+        Toast.makeText(getActivity(), "inside set DestinationStation: the destinationstation", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), destStation.getName(), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getActivity(), "inside set DestinationStation: the originstation", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), origin.getName(), Toast.LENGTH_SHORT).show();
+
+
+
+        // Create a request object from depart cmd for the TrainHeadStation info.
+        GetDepartTrainHeadStationRequest request =
+                new GetDepartTrainHeadStationRequest(origin.getAbbr(),destStation.getAbbr());
+
+
+        // Create a unique cache key
+        String cacheKey = request.createCacheKey();
+
+        // Execute the network request
+        // Set the cache duration for 10 seconds
+        ((MainActivity) getActivity()).getSpiceManager().execute(request, cacheKey,
+                DurationInMillis.ONE_SECOND * 10, new GetDepartTrainHeadStationRequestListener());
+    }
+
+
+    private class GetDepartTrainHeadStationRequestListener implements RequestListener<Depart>
+    {
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Log.e(TAG, "Error fetching arrival times.");
+            Log.e(TAG, spiceException.toString());
+
+            // TODO: Show some kind of error message inside of this fragment's listview/view
+        }
+
+        @Override
+        public void onRequestSuccess(Depart departResponse)
+        {
+            Log.i(TAG, "Fetching depart times successful");
+
+            // Request has a list of trips
+            //each trip has a list of leg order
+            // we are interested in only the first leg and no transfers
+            // get the trainHeadStationName from the first leg
+
+            List<Trip> tripInfo = departResponse.getSchedule().getRequest();
+
+            List<String> trainNames = new ArrayList<String>(10);
+            for (Trip t : tripInfo)
+            {
+                List<Leg> legsInfo = t.getLegs();
+                String trainHeadStationName = legsInfo.get(0).getTrainHeadStation();
+                trainNames.add(trainHeadStationName);
+
+
+            }
+            trainHeadStationNames = trainNames;
+            filterArrivalTimes();
+            //  Update the ListAdapter with the new data
+            adapter.notifyDataSetChanged();
+            // if it doesn't refresh itself then do the addAll
+           // adapter.addAll(etdList);
+
+            // attach the Etd list to ETD adapter
+            // addAll(collection) works only from version 11 and above
+            //adapter.addAll(etdResponse.getStationOrigin().getEtdList());
+            //adapter.
+
+        }
+    }
+
+    public void filterArrivalTimes() {
+        List<Etd> filteredEtdList = new ArrayList<Etd>();
+        for (Etd e : etdList)
+        {
+            for (String trainHeadStationName : trainHeadStationNames) {
+            if (e.getAbbrDest().equals(trainHeadStationName))
+                {
+                    filteredEtdList.add(e);
+                }
+            }
+        }
+
+        if (filteredEtdList.size() != 0)
+            etdList = filteredEtdList;
+
+    }
+
+
+
+
+
+    @DebugLog
+    public void setStation(Station station)
+    {
         // DONE SAVE station and execute network request to get ETD data about this station
         // Code below was copy/pasted from ApiTesterFragment.  NEEDS to be reviewed.
 
@@ -105,10 +208,12 @@ public class NearestStationFragment extends Fragment {
     }
 
 
-    private class GetArrivalTimesRequestListener implements RequestListener<EtdResponse> {
+    private class GetArrivalTimesRequestListener implements RequestListener<EtdResponse>
+    {
 
         @Override
-        public void onRequestFailure(SpiceException spiceException) {
+        public void onRequestFailure(SpiceException spiceException)
+        {
             Log.e(TAG, "Error fetching arrival times.");
             Log.e(TAG, spiceException.toString());
 
@@ -128,7 +233,9 @@ public class NearestStationFragment extends Fragment {
 
             adapter.clear();
             // addAll(collection) works only from version 11 and above
-            adapter.addAll(etdResponse.getStationOrigin().getEtdList());
+            etdList = etdResponse.getStationOrigin().getEtdList();
+            filterArrivalTimes();
+            adapter.addAll(etdList);
 
         }
     }

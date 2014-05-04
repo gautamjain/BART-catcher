@@ -68,20 +68,20 @@ public class Leg {
         this.routeNum = routeNum;
     }
 
-    public String getNextStation() {
-        return nextStation;
+    public String getTrainHeadStation() {
+        return trainHeadStation;
     }
 
-    public void setNextStation(String nextStation) {
-        this.nextStation = nextStation;
+    public void setTrainHeadStation(String trainHeadStation) {
+        this.trainHeadStation = trainHeadStation;
     }
 
-    public String getTrainNum() {
-        return trainNum;
+    public String getTrainIdx() {
+        return trainIdx;
     }
 
-    public void setTrainNum(String trainNum) {
-        this.trainNum = trainNum;
+    public void setTrainIdx(String trainIdx) {
+        this.trainIdx = trainIdx;
     }
 
     @Attribute
@@ -96,11 +96,11 @@ public class Leg {
     @Attribute(name = "line")
     private String routeNum;
 
-    @Attribute(name = "trainHeadStation")
-    private String nextStation;
+    @Attribute
+    private String trainHeadStation;
 
-    @Attribute(name = "trainIdx")
-    private String trainNum;
+    @Attribute
+    private String trainIdx;
 
     public String getOrder() {
         return order;

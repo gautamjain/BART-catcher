@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity implements
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private List<Station> stationsList;
+    private Station closestStation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,17 @@ public class MainActivity extends BaseActivity implements
         // about your trip (from the nearest station to given destination station).
 
         Toast.makeText(this, destination.getName() + " was selected!", Toast.LENGTH_LONG ).show();
+
+        // you are using the same XML layout(fragment_nearest_station.xml) to filter the destination
+        // station list
+
+        NearestStationFragment filterDestination = (NearestStationFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
+
+        filterDestination.setDestinationStation(closestStation,destination);
+
+
+
     }
 
     // This func gives access to the middle fragment
@@ -212,7 +224,10 @@ public class MainActivity extends BaseActivity implements
     // Define the callback method that receives location updates
     @Override
     public void onLocationChanged(Location location) {
-        
+
+        // for testing : remove this later
+        Station destination = new Station();
+        destination.setAbbr("RICH");
         // Report to the UI that the location was updated
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
@@ -227,12 +242,13 @@ public class MainActivity extends BaseActivity implements
         // - Get a the NearestStationFragment from the FragmentManager
         // - Call NearestStationFragment#setStation(station) to set the closest station
 
-        Station closestStation = Util.getClosestStation(location, stationsList);
+        // moved from local varaiable to outside-----check???
+        closestStation = Util.getClosestStation(location, stationsList);
 
         NearestStationFragment f = (NearestStationFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
        // Station station = stations.get(stationIndex);
         f.setStation(closestStation);
-
+        //f.setDestinationStation(closestStation,destination);
     }
 }
