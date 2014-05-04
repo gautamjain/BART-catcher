@@ -38,14 +38,14 @@ public class FavoritesUtil {
         }
 
         // If no favorites exist, then generate some fake favorites and save for next time
-        if (favoriteStations.size() == 0) {
+        if (favoriteStations == null || favoriteStations.size() == 0) {
             favoriteStations = generateAndSaveFakeStations(context);
         }
 
         return favoriteStations;
     }
 
-    public static void saveFavorites(Context context, ArrayList<FavoriteStation> favoriteStations) {
+    public static void saveFavorites(Context context, List<FavoriteStation> favoriteStations) {
         // Initialize GSON
         Gson gson = new Gson();
         Type listType = new TypeToken<List<FavoriteStation>>() {}.getType();

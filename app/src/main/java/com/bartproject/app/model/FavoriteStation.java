@@ -1,6 +1,8 @@
 package com.bartproject.app.model;
 
-public class FavoriteStation {
+import java.io.Serializable;
+
+public class FavoriteStation implements Serializable {
 
     // Dummy constructor for creating fake FavoriteStations (testing purposes)
     public FavoriteStation(String label, Station station) {

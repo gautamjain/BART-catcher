@@ -1,19 +1,22 @@
 package com.bartproject.app;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bartproject.app.model.Station;
 import com.bartproject.app.model.StationsResponse;
 import com.bartproject.app.network.GetStationsRequest;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ import java.util.List;
 public class SelectStationActivity extends BaseActivity {
 
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
+    public static final String ITEM_STATION = "EXTRA_STATION";
 
     TextView tvTitle;
     ListView lvStations;
@@ -40,6 +44,18 @@ public class SelectStationActivity extends BaseActivity {
         List<Station> stations = new ArrayList<Station>(0);
         adapter = new ArrayAdapter<Station>(this, android.R.layout.simple_list_item_1, stations);
         lvStations.setAdapter(adapter);
+
+        lvStations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent data = new Intent();
+
+                data.putExtra(ITEM_STATION, adapter.getItem(position));
+//                data.putExtra("ITEM_POSITION", )
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
 
         // Set title
         String title = getIntent().getStringExtra(EXTRA_TITLE);

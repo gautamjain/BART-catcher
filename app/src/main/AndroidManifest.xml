@@ -21,10 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.bartproject.app.StationSelect"
-            android:label="@string/title_activity_station_select" >
-        </activity>
-        <activity
             android:name="com.bartproject.app.PreviousDestinations"
             android:label="@string/title_activity_previous_destinations" >
         </activity>
@@ -46,7 +42,7 @@
             android:label="@string/title_activity_favorite_station" >
         </activity>
         <activity
-            android:name="com.bartproject.app.SelectFavoriteStationActivity"
+            android:name=".EditFavoriteStationActivity"
             android:label="@string/title_activity_select_favorite_station" >
         </activity>
     </application>

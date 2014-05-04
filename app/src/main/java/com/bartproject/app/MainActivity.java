@@ -1,5 +1,6 @@
 package com.bartproject.app;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,7 +121,9 @@ public class MainActivity extends BaseActivity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_edit_favorites) {
+            Intent intent = new Intent(this, FavoriteStationActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

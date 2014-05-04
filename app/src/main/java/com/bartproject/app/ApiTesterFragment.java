@@ -1,5 +1,6 @@
 package com.bartproject.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 public class ApiTesterFragment extends Fragment {
 
     public static final String TAG = ApiTesterFragment.class.getSimpleName();
+    private static final int SELECT_STATION_REQUEST_CODE = 1;
 
     TextView tvDebug;
     Button btnFetchEtd;
@@ -83,12 +85,20 @@ public class ApiTesterFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SelectStationActivity.class);
                 intent.putExtra(SelectStationActivity.EXTRA_TITLE, "Select a new station:");
-                startActivity(intent);
+                startActivityForResult(intent, SELECT_STATION_REQUEST_CODE);
             }
         });
 
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && requestCode == SELECT_STATION_REQUEST_CODE) {
+            Station selectedStation = (Station) data.getSerializableExtra(SelectStationActivity.ITEM_STATION);
+            Toast.makeText(getActivity(), "Station selected: " + selectedStation.getName(), Toast.LENGTH_LONG).show();
+        }
     }
 
     // For Testing Filter destination station

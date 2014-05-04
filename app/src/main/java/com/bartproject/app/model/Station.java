@@ -4,11 +4,12 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.io.Serializable;
 import java.util.List;
 
 // origin
 @Root(strict = false)
-public class Station {
+public class Station implements Serializable {
 
     public Station(String name) {
         // Dummy constructor for creating fake Stations (testing purposes)
