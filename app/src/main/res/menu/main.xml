@@ -7,4 +7,9 @@
         android:title="Edit Favorites"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
+    <item android:id="@+id/action_fetch_stations"
+        android:title="Fetch Stations"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

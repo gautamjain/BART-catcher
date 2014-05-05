@@ -1,8 +1,6 @@
 package com.bartproject.app.network;
 
 
-import android.app.Application;
-
 import com.bartproject.app.model.Depart;
 import com.bartproject.app.model.EtdResponse;
 import com.bartproject.app.model.StationsResponse;
@@ -11,10 +9,11 @@ import com.octo.android.robospice.persistence.exception.CacheCreationException;
 import com.octo.android.robospice.persistence.retrofit.RetrofitObjectPersisterFactory;
 import com.octo.android.robospice.retrofit.RetrofitSpiceService;
 
+import android.app.Application;
+
 import java.io.File;
 
 import retrofit.RestAdapter;
-import retrofit.RestAdapter.LogLevel;
 import retrofit.converter.Converter;
 import retrofit.converter.SimpleXMLConverter;
 import retrofit.http.GET;
@@ -109,7 +108,6 @@ public class ApiService extends RetrofitSpiceService {
     protected RestAdapter.Builder createRestAdapterBuilder() {
         return new RestAdapter.Builder()
                 .setEndpoint(getServerUrl())
-                .setLogLevel(LogLevel.FULL)
                 .setConverter(getConverter());
     }
 

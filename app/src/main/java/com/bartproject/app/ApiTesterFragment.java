@@ -1,8 +1,5 @@
 package com.bartproject.app;
 
-import android.widget.Button;
-
-import android.app.Activity;
 import com.bartproject.app.model.Estimate;
 import com.bartproject.app.model.Etd;
 import com.bartproject.app.model.EtdResponse;
@@ -14,6 +11,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,17 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.bartproject.app.model.Estimate;
-import com.bartproject.app.model.Etd;
-import com.bartproject.app.model.EtdResponse;
-import com.bartproject.app.model.Station;
-import com.bartproject.app.model.StationsResponse;
-import com.bartproject.app.network.GetArrivalTimesRequest;
-import com.bartproject.app.network.GetStationsRequest;
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
 
 /**
  * A placeholder fragment containing a simple view.

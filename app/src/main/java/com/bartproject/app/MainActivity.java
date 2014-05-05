@@ -13,6 +13,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.bartproject.app.model.Station;
+import com.bartproject.app.model.StationsResponse;
+import com.bartproject.app.network.GetStationsRequest;
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
 
 import android.content.Intent;
 import android.location.Location;
@@ -77,7 +82,6 @@ public class MainActivity extends BaseActivity implements
             // Add the three fragments for the main screen
             getFragmentManager().beginTransaction()
                     .add(R.id.fragment_container_map, MapFragment.newInstance(getGoogleMapOptions()))
-                    .add(R.id.fragment_container_top, new ApiTesterFragment())
                     .add(R.id.fragment_container_middle, new NearestStationFragment())
                     .add(R.id.fragment_container_bottom, new FavoriteStationsGridFragment())
                     .commit();
@@ -129,7 +133,6 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -137,15 +140,18 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_edit_favorites) {
-            Intent intent = new Intent(this, FavoriteStationActivity.class);
-            startActivity(intent);
-            return true;
+        // Handle action bar item clicks here.
+
+        switch (item.getItemId()) {
+            case R.id.action_edit_favorites:
+                Intent intent = new Intent(this, FavoriteStationActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_fetch_stations:
+                fetchStations();
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -187,10 +193,7 @@ public class MainActivity extends BaseActivity implements
         NearestStationFragment filterDestination = (NearestStationFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_container_middle);
 
-        filterDestination.setDestinationStation(closestStation,destination);
-
-
-
+        filterDestination.setDestinationStation(closestStation, destination);
     }
 
     // This func gives access to the middle fragment
@@ -250,34 +253,30 @@ public class MainActivity extends BaseActivity implements
     }
 
 
-    // Define the callback method that receives location updates
+    // The callback method that receives location updates
     @Override
     public void onLocationChanged(Location location) {
-
-        // for testing : remove this later
-        Station destination = new Station();
-        destination.setAbbr("RICH");
-
         // Report to the UI that the location was updated
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-
         Log.e(TAG, msg);
-//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
-        // TODO: Calculate the closest station using Util function and setStation
-        // When 'onLocationChanged' is called:
-        // - Calculate the closet station - e.g. Util.getClosestStation(Location loc)
-        // - Get a the NearestStationFragment from the FragmentManager
-        // - Call NearestStationFragment#setStation(station) to set the closest station
-
-        // moved from local varaiable to outside-----check???
+        // Calculate closest station
         closestStation = Util.getClosestStation(location, stationsList);
+        setClosestStation(closestStation);
+    }
 
+    public void setClosestStation(Station closestStation) {
+        // FOR TESTING ONLY : Create a fake destination station
+        // Remove this later
+        Station destination = new Station();
+        destination.setAbbr("RICH");
+
+        // Update fragment with closest station
         NearestStationFragment f = (NearestStationFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_container_middle);
-        // Station station = stations.get(stationIndex);
+
         f.setStation(closestStation);
         f.setDestinationStation(closestStation, destination);
 
@@ -309,5 +308,52 @@ public class MainActivity extends BaseActivity implements
                 .zoomControlsEnabled(false);
 
         return options;
+    }
+
+    /**
+     * This method is here ONLY for testing purposes.  IT WILL BE DELETED!!
+     */
+    public void fetchStations() {
+        // Create a request object
+        GetStationsRequest request = new GetStationsRequest();
+
+        // Create a unique cache key
+        String cacheKey = request.createCacheKey();
+
+        // Execute the network request
+        // Set the cache duration for 10 seconds, although in reality this should be closer to one month
+        getSpiceManager().execute(request, cacheKey,
+                DurationInMillis.ONE_SECOND * 10, new GetStationsRequestListener());
+    }
+
+    /**
+     * This request listener is here ONLY for testing purposes.  IT WILL BE DELETED!!
+     */
+    private class GetStationsRequestListener implements RequestListener<StationsResponse> {
+
+        /**
+         * ONLY for testing purposes
+         */
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Log.e(TAG, "Error fetching arrival times.");
+            Log.e(TAG, spiceException.toString());
+
+            Toast.makeText(MainActivity.this, "Failed - see Logcat", Toast.LENGTH_SHORT).show();
+        }
+
+        /**
+         * ONLY for testing purposes
+         */
+        @Override
+        public void onRequestSuccess(StationsResponse stationsResponse) {
+            Log.e(TAG, "Fetching stations successful");
+
+            for (Station s : stationsResponse.getStations()) {
+                Log.e(TAG, s.getAbbr() + " - " + s.getName());
+            }
+
+            setStationsList(stationsResponse.getStations());
+        }
     }
 }

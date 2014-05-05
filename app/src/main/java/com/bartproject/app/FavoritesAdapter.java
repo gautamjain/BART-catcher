@@ -37,7 +37,5 @@ public class FavoritesAdapter extends ArrayAdapter<FavoriteStation>{
         tvStationName.setText(favoriteStation.getStation().getName());
 
         return view;
-
-
     }
 }

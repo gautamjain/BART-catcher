@@ -44,26 +44,8 @@ public class NearestStationFragment extends Fragment
     List<Etd> etdList;
     List<String> trainHeadStationNames = new ArrayList<String>(0);
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment NearestStationFragment.
-     */
-    // Not required in Bart project
-    /*public static NearestStationFragment newInstance() {
-        NearestStationFragment fragment = new NearestStationFragment();
-        return fragment;
-    }*/
-
     public NearestStationFragment() {
         // Required empty public constructor
-    }
-
-    //We don't see this oncreate for this fragment
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -84,21 +66,11 @@ public class NearestStationFragment extends Fragment
     }
 
     @DebugLog
-    // returns an arraylist of trainHeadStation list
-    public void setDestinationStation(Station origin,Station destStation)
+    public void setDestinationStation(Station origin, Station destStation)
     {
-//        Toast.makeText(getActivity(), "inside set DestinationStation: the destinationstation", Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(), destStation.getName(), Toast.LENGTH_SHORT).show();
-//
-//        Toast.makeText(getActivity(), "inside set DestinationStation: the originstation", Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(), origin.getName(), Toast.LENGTH_SHORT).show();
-
-
-
         // Create a request object from depart cmd for the TrainHeadStation info.
         GetDepartTrainHeadStationRequest request =
                 new GetDepartTrainHeadStationRequest(origin.getAbbr(), destStation.getAbbr());
-
 
         // Create a unique cache key
         String cacheKey = request.createCacheKey();
@@ -118,7 +90,6 @@ public class NearestStationFragment extends Fragment
             Log.e(TAG, "Error fetching arrival times.");
             Log.e(TAG, spiceException.toString());
 
-            // TODO: Show some kind of error message inside of this fragment's listview/view
         }
 
         @Override
@@ -144,16 +115,7 @@ public class NearestStationFragment extends Fragment
             }
             trainHeadStationNames = trainNames;
             filterArrivalTimes();
-            //  Update the ListAdapter with the new data
             adapter.notifyDataSetChanged();
-            // if it doesn't refresh itself then do the addAll
-           // adapter.addAll(etdList);
-
-            // attach the Etd list to ETD adapter
-            // addAll(collection) works only from version 11 and above
-            //adapter.addAll(etdResponse.getStationOrigin().getEtdList());
-            //adapter.
-
         }
     }
 
@@ -174,21 +136,9 @@ public class NearestStationFragment extends Fragment
 
     }
 
-
-
-
-
     @DebugLog
     public void setStation(Station station)
     {
-        // DONE SAVE station and execute network request to get ETD data about this station
-        // Code below was copy/pasted from ApiTesterFragment.  NEEDS to be reviewed.
-
-        // anu- test statement remove it later
-//        Toast.makeText(getActivity(), "inside set station of nearestStnFragment", Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(), station.getName(), Toast.LENGTH_SHORT).show();
-
-
         // Create a request object - showing the etd station.
         GetArrivalTimesRequest request = new GetArrivalTimesRequest(station.getAbbr());
 
@@ -202,7 +152,6 @@ public class NearestStationFragment extends Fragment
 
         //Set the station title (TextView) of this fragment to the station's name.E.g. station.getName();
         tvStationTitle.setText(station.getName());
-
     }
 
 
@@ -214,8 +163,6 @@ public class NearestStationFragment extends Fragment
         {
             Log.e(TAG, "Error fetching arrival times.");
             Log.e(TAG, spiceException.toString());
-
-            // TODO: Show some kind of error message inside of this fragment's listview/view
         }
 
         @Override
@@ -223,14 +170,7 @@ public class NearestStationFragment extends Fragment
         {
             Log.i(TAG, "Fetching arrival times successful");
 
-            //  Need to extract relevant data from etdRespones here
-            // For example,  etdResponse.getArrivals()[0]
-            //  Update the ListAdapter with the new data
-            // attach the Etd list to ETD adapter
-            // Each row of this list contains station_item list.
-
             adapter.clear();
-            // addAll(collection) works only from version 11 and above
             etdList = etdResponse.getStationOrigin().getEtdList();
             filterArrivalTimes();
             adapter.addAll(etdList);
