@@ -117,7 +117,6 @@ public class NearestStationFragment extends Fragment
             }
             trainHeadStationNames = trainNames;
             filterArrivalTimes();
-            adapter.notifyDataSetChanged();
         }
     }
 
@@ -142,6 +141,8 @@ public class NearestStationFragment extends Fragment
 
         if (filteredEtdList.size() != 0) {
             etdList = filteredEtdList;
+            adapter.clear();
+            adapter.addAll(etdList);
             Log.d(TAG, "Replaced etdList with filteredEtdList");
         }
 
