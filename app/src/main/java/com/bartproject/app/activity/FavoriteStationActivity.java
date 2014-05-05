@@ -2,28 +2,29 @@ package com.bartproject.app.activity;
 
 import com.bartproject.app.FavoritesAdapter;
 import com.bartproject.app.R;
+import com.bartproject.app.SwipeDismissListViewTouchListener;
 import com.bartproject.app.model.FavoriteStation;
 import com.bartproject.app.model.Station;
 import com.bartproject.app.util.FavoritesUtil;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteStationActivity extends Activity {
+public class FavoriteStationActivity extends ListActivity {
 
     private static final int SELECT_STATION_REQUEST_CODE = 1;
     private static final int EDIT_FAVORITE_STATION_REQUEST_CODE = 2;
-    ListView lvFavorites;
     Button btnAddFavorite;
-    FavoritesAdapter adapter;
+    FavoritesAdapter mAdapter;
     private int favoritePosition = -1;
 
 
@@ -44,16 +45,51 @@ public class FavoriteStationActivity extends Activity {
         });
 
 
-        lvFavorites = (ListView) findViewById(R.id.lvFavorites);
-        adapter = new FavoritesAdapter(this, new ArrayList<FavoriteStation>(0));
-        lvFavorites.setAdapter(adapter);
+        mAdapter = new FavoritesAdapter(this, new ArrayList<FavoriteStation>(0));
+        setListAdapter(mAdapter);
 
-        lvFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                addEditFavorite(position);
-            }
-        });
+        /**
+         * SETUP FOR SWIPEABLE LIST ITEMS:
+         * copied from
+         * https://github.com/romannurik/Android-SwipeToDismiss/
+         */
+        ListView listView = getListView();
+        // Create a ListView-specific touch listener. ListViews are given special treatment because
+        // by default they handle touches for their list items... i.e. they're in charge of drawing
+        // the pressed state (the list selector), handling list item clicks, etc.
+        SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        listView,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    mAdapter.remove(mAdapter.getItem(position));
+                                    Log.e("DISMISSED", "position = " + position);
+
+                                    // Load saved favorites, delete the specified position, and save favorites to file
+                                    List<FavoriteStation> favoriteStations = FavoritesUtil.readFavorites(FavoriteStationActivity.this);
+                                    favoriteStations.remove(position);
+                                    FavoritesUtil.saveFavorites(FavoriteStationActivity.this, favoriteStations);
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+        listView.setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during ListView scrolling,
+        // we don't look for swipes.
+        listView.setOnScrollListener(touchListener.makeScrollListener());
+    }
+
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        addEditFavorite(position);
     }
 
     public void addEditFavorite(int position) {
@@ -62,7 +98,6 @@ public class FavoriteStationActivity extends Activity {
         favoritePosition = position;
         startActivityForResult(intent, SELECT_STATION_REQUEST_CODE);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,8 +123,8 @@ public class FavoriteStationActivity extends Activity {
             FavoritesUtil.saveFavorites(this, favoriteStations);
 
             // Update the current list
-            adapter.clear();
-            adapter.addAll(favoriteStations);
+            mAdapter.clear();
+            mAdapter.addAll(favoriteStations);
         }
     }
 
@@ -97,9 +132,9 @@ public class FavoriteStationActivity extends Activity {
     public void onStart() {
         super.onStart();
 
-        // Update adapter with favorites
-        adapter.clear();
-        adapter.addAll(FavoritesUtil.readFavorites(this));
+        // Update mAdapter with favorites
+        mAdapter.clear();
+        mAdapter.addAll(FavoritesUtil.readFavorites(this));
     }
 
 }
