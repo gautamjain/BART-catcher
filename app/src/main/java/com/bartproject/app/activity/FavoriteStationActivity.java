@@ -32,6 +32,9 @@ public class FavoriteStationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_station);
 
+        // Hide action bar logo
+        getActionBar().setDisplayShowHomeEnabled(false);
+
         btnAddFavorite = (Button) findViewById(R.id.add_favorite_station_button);
         btnAddFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +58,7 @@ public class FavoriteStationActivity extends Activity {
 
     public void addEditFavorite(int position) {
         Intent intent = new Intent(FavoriteStationActivity.this, SelectStationActivity.class);
-        intent.putExtra(SelectStationActivity.EXTRA_TITLE, "Select a favorite station:");
+        intent.putExtra(SelectStationActivity.EXTRA_TITLE, "Select your favorite station");
         favoritePosition = position;
         startActivityForResult(intent, SELECT_STATION_REQUEST_CODE);
     }

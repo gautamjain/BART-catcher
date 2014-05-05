@@ -27,6 +27,9 @@ public class EditFavoriteStationActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_favorite_station);
 
+        // Hide action bar logo
+        getActionBar().setDisplayShowHomeEnabled(false);
+
         station = (Station) getIntent().getSerializableExtra(EXTRA_STATION);
 
         tvStationName = (TextView) findViewById(R.id.tvStationName);

@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ public class SelectStationActivity extends BaseActivity {
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
     public static final String ITEM_STATION = "EXTRA_STATION";
 
-    TextView tvTitle;
     ListView lvStations;
     ArrayAdapter<Station> adapter;
 
@@ -35,7 +33,9 @@ public class SelectStationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_station);
 
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
+        // Hide action bar logo
+        getActionBar().setDisplayShowHomeEnabled(false);
+
         lvStations = (ListView) findViewById(R.id.lvStations);
 
         // Setep ListView
@@ -57,7 +57,7 @@ public class SelectStationActivity extends BaseActivity {
 
         // Set title
         String title = getIntent().getStringExtra(EXTRA_TITLE);
-        tvTitle.setText(title);
+        getActionBar().setTitle(title);
 
         // Execute network request to get list of stations
         fetchStations();
@@ -88,9 +88,6 @@ public class SelectStationActivity extends BaseActivity {
         public void onRequestSuccess(StationsResponse stationsResponse) {
             adapter.clear();
             adapter.addAll(stationsResponse.getStations());
-
-            Toast.makeText(SelectStationActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-
         }
     }
 

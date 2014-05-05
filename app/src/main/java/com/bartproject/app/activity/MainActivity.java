@@ -80,6 +80,10 @@ public class MainActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Setup action bar, hide title & logo
+        getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayShowTitleEnabled(false);
+
         // Read the list of stations from file and cache in memory
         stationsList = StationsUtil.readStations(this);
 
