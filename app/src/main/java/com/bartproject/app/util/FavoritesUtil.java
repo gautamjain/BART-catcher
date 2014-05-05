@@ -1,13 +1,14 @@
 package com.bartproject.app.util;
 
-import android.content.Context;
-
-import com.bartproject.app.model.FavoriteStation;
-import com.bartproject.app.model.Station;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import com.bartproject.app.model.FavoriteStation;
+import com.bartproject.app.model.Station;
+
 import org.apache.commons.io.FileUtils;
+
+import android.content.Context;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,9 +38,9 @@ public class FavoritesUtil {
             e.printStackTrace();
         }
 
-        // If no favorites exist, then generate some fake favorites and save for next time
-        if (favoriteStations == null || favoriteStations.size() == 0) {
-            favoriteStations = generateAndSaveFakeStations(context);
+        // If no favorites exist, then replace with empty list
+        if (favoriteStations == null) {
+            favoriteStations = new ArrayList<FavoriteStation>(0);
         }
 
         return favoriteStations;
