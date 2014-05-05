@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.bartproject.app.ApiTesterFragment">
 
     <Button
@@ -28,24 +26,12 @@
         android:layout_toRightOf="@id/btnFetchStations"
         android:text="Select station"/>
 
-    <TextView
-        android:layout_below="@id/btnFetchEtd"
-        android:id="@+id/tvDebug"
-        android:text="This is a temporary placeholder for API testing purposes.  Will be replaced with StationMapFragment later on."
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="50"
-        android:scrollbars="vertical"
-        />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filter Stations"
         android:id="@+id/btnFilterStations"
-        android:layout_below="@+id/tvDebug"
+        android:layout_below="@+id/btnFetchEtd"
         android:layout_toLeftOf="@+id/btnSelectStation" />
-
 
 </RelativeLayout>

@@ -1,9 +1,11 @@
 package com.bartproject.app;
 
+import com.bartproject.app.model.FavoriteStation;
+import com.bartproject.app.model.Station;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,13 +13,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.bartproject.app.model.FavoriteStation;
-import com.bartproject.app.model.Station;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteStationActivity extends ActionBarActivity {
+public class FavoriteStationActivity extends Activity {
 
     private static final int SELECT_STATION_REQUEST_CODE = 1;
     private static final int EDIT_FAVORITE_STATION_REQUEST_CODE = 2;

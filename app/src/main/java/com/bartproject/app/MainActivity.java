@@ -1,5 +1,19 @@
 package com.bartproject.app;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+
+import com.bartproject.app.model.Station;
+
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -7,13 +21,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.bartproject.app.model.Station;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 
 import java.util.List;
 
@@ -29,13 +36,13 @@ public class MainActivity extends BaseActivity implements
     private static final int MILLISECONDS_PER_SECOND = 1000;
 
     // Update frequency in seconds
-    public static final int UPDATE_INTERVAL_IN_SECONDS = 10;
+    public static final int UPDATE_INTERVAL_IN_SECONDS = 15;
 
     // Update frequency in milliseconds
     private static final long UPDATE_INTERVAL = MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
 
     // The fastest update frequency, in seconds
-    private static final int FASTEST_INTERVAL_IN_SECONDS = 5;
+    private static final int FASTEST_INTERVAL_IN_SECONDS = 10;
 
     // A fast frequency ceiling in milliseconds
     private static final long FASTEST_INTERVAL = MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
@@ -68,7 +75,8 @@ public class MainActivity extends BaseActivity implements
 
         if (savedInstanceState == null) {
             // Add the three fragments for the main screen
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container_map, MapFragment.newInstance(getGoogleMapOptions()))
                     .add(R.id.fragment_container_top, new ApiTesterFragment())
                     .add(R.id.fragment_container_middle, new NearestStationFragment())
                     .add(R.id.fragment_container_bottom, new FavoriteStationsGridFragment())
@@ -105,6 +113,14 @@ public class MainActivity extends BaseActivity implements
     protected void onStart() {
         super.onStart();
         mLocationClient.connect();
+
+        setupGoogleMaps();
+    }
+
+    private void setupGoogleMaps() {
+        GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_container_map)).getMap();
+        map.setMyLocationEnabled(true);
+        map.getUiSettings().setMyLocationButtonEnabled(false);
     }
 
     @Override
@@ -165,7 +181,7 @@ public class MainActivity extends BaseActivity implements
         // station list
 
         NearestStationFragment filterDestination = (NearestStationFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
+                getFragmentManager().findFragmentById(R.id.fragment_container_middle);
 
         filterDestination.setDestinationStation(closestStation,destination);
 
@@ -178,7 +194,7 @@ public class MainActivity extends BaseActivity implements
     // This method is for TESTING - remove this later
     public void setStationsList(List<Station> stations) {
         NearestStationFragment f = (NearestStationFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
+                getFragmentManager().findFragmentById(R.id.fragment_container_middle);
 
         // Generatoe a random number
         int stationIndex = (int) (Math.random() * stations.size());
@@ -256,9 +272,33 @@ public class MainActivity extends BaseActivity implements
         closestStation = Util.getClosestStation(location, stationsList);
 
         NearestStationFragment f = (NearestStationFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_container_middle);
+                getFragmentManager().findFragmentById(R.id.fragment_container_middle);
        // Station station = stations.get(stationIndex);
         f.setStation(closestStation);
         f.setDestinationStation(closestStation,destination);
+
+        // Update Map
+        LatLng coordinates = new LatLng(closestStation.getGtfs_latitude(), closestStation.getGtfs_longitude());
+        GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_container_map)).getMap();
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 16));
+
+    }
+
+    public GoogleMapOptions getGoogleMapOptions() {
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(37.741610, -122.313299))
+                .zoom(8)
+                .build();
+
+        GoogleMapOptions options = new GoogleMapOptions();
+
+        options.camera(cameraPosition)
+                .mapType(GoogleMap.MAP_TYPE_NORMAL)
+                .compassEnabled(false)
+                .rotateGesturesEnabled(false)
+                .tiltGesturesEnabled(true)
+                .zoomControlsEnabled(false);
+
+        return options;
     }
 }

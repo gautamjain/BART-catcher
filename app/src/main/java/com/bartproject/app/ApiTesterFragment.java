@@ -1,16 +1,27 @@
 package com.bartproject.app;
 
+import android.widget.Button;
+
 import android.app.Activity;
+import com.bartproject.app.model.Estimate;
+import com.bartproject.app.model.Etd;
+import com.bartproject.app.model.EtdResponse;
+import com.bartproject.app.model.Station;
+import com.bartproject.app.model.StationsResponse;
+import com.bartproject.app.network.GetArrivalTimesRequest;
+import com.bartproject.app.network.GetStationsRequest;
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bartproject.app.model.Estimate;
@@ -32,7 +43,7 @@ public class ApiTesterFragment extends Fragment {
     public static final String TAG = ApiTesterFragment.class.getSimpleName();
     private static final int SELECT_STATION_REQUEST_CODE = 1;
 
-    TextView tvDebug;
+//    TextView tvDebug;
     Button btnFetchEtd;
     Button btnFetchStations;
     Button btnSelectStation;
@@ -46,8 +57,8 @@ public class ApiTesterFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_api_tester, container, false);
 
-        tvDebug = (TextView) rootView.findViewById(R.id.tvDebug);
-        tvDebug.setMovementMethod(new ScrollingMovementMethod());
+//        tvDebug = (TextView) rootView.findViewById(R.id.tvDebug);
+//        tvDebug.setMovementMethod(new ScrollingMovementMethod());
 
         btnFetchEtd = (Button) rootView.findViewById(R.id.btnFetchEtd);
         btnFetchStations = (Button) rootView.findViewById(R.id.btnFetchStations);
@@ -207,7 +218,7 @@ public class ApiTesterFragment extends Fragment {
 
     public void appendLog(String s) {
         Log.d(TAG, s);
-        tvDebug.append(s + "\n");
+//        tvDebug.append(s + "\n");
     }
 
 
@@ -215,7 +226,7 @@ public class ApiTesterFragment extends Fragment {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            tvDebug.setText("");
+//            tvDebug.setText("");
             appendLog("Error fetching arrival times.");
             Log.e(TAG, spiceException.toString());
 
@@ -225,7 +236,7 @@ public class ApiTesterFragment extends Fragment {
 
         @Override
         public void onRequestSuccess(StationsResponse stationsResponse) {
-            tvDebug.setText("");
+//            tvDebug.setText("");
             appendLog("Fetching stations successful");
 
             appendLog("Number of stations: " + stationsResponse.getStations().size());
@@ -245,7 +256,7 @@ public class ApiTesterFragment extends Fragment {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            tvDebug.setText("");
+//            tvDebug.setText("");
             appendLog("Error fetching arrival times.");
             Log.e(TAG, spiceException.toString());
 
@@ -255,7 +266,7 @@ public class ApiTesterFragment extends Fragment {
 
         @Override
         public void onRequestSuccess(EtdResponse etdResponse) {
-            tvDebug.setText("");
+//            tvDebug.setText("");
             appendLog("Fetching arrival times successful");
 
             // TODO: Need to extract relevant data from etdRespones here
