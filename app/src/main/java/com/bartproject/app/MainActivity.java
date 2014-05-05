@@ -119,8 +119,12 @@ public class MainActivity extends BaseActivity implements
 
     private void setupGoogleMaps() {
         GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_container_map)).getMap();
-        map.setMyLocationEnabled(true);
-        map.getUiSettings().setMyLocationButtonEnabled(false);
+        if (map != null) {
+            map.setMyLocationEnabled(true);
+            map.getUiSettings().setMyLocationButtonEnabled(false);
+        } else {
+            Log.e(TAG, "MAPS COULD NOT BE SETUP - Is Google Play Services missing?");
+        }
     }
 
     @Override
@@ -258,7 +262,7 @@ public class MainActivity extends BaseActivity implements
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        
+
         Log.e(TAG, msg);
 //        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
@@ -273,15 +277,20 @@ public class MainActivity extends BaseActivity implements
 
         NearestStationFragment f = (NearestStationFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_container_middle);
-       // Station station = stations.get(stationIndex);
+        // Station station = stations.get(stationIndex);
         f.setStation(closestStation);
-        f.setDestinationStation(closestStation,destination);
+        f.setDestinationStation(closestStation, destination);
 
         // Update Map
-        LatLng coordinates = new LatLng(closestStation.getGtfs_latitude(), closestStation.getGtfs_longitude());
-        GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.fragment_container_map)).getMap();
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 16));
-
+        LatLng coordinates = new LatLng(closestStation.getGtfs_latitude(),
+                closestStation.getGtfs_longitude());
+        GoogleMap map = ((MapFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_container_map)).getMap();
+        if (map != null) {
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 16));
+        } else {
+            Log.e(TAG, "MAPS COULD NOT BE ANIMATED - Is Google Play Services missing?");
+        }
     }
 
     public GoogleMapOptions getGoogleMapOptions() {
