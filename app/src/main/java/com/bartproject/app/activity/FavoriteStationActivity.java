@@ -1,16 +1,14 @@
 package com.bartproject.app.activity;
 
 import com.bartproject.app.FavoritesAdapter;
-import com.bartproject.app.util.FavoritesUtil;
 import com.bartproject.app.R;
 import com.bartproject.app.model.FavoriteStation;
 import com.bartproject.app.model.Station;
+import com.bartproject.app.util.FavoritesUtil;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -71,7 +69,7 @@ public class FavoriteStationActivity extends Activity {
             Intent intent = new Intent(this, EditFavoriteStationActivity.class);
             intent.putExtra(EditFavoriteStationActivity.EXTRA_STATION, selectedStation);
             startActivityForResult(intent, EDIT_FAVORITE_STATION_REQUEST_CODE);
-//            Toast.makeText(this, "Station selected: " + selectedStation.getName(), Toast.LENGTH_LONG).show();
+
         } else if (resultCode == Activity.RESULT_OK && requestCode == EDIT_FAVORITE_STATION_REQUEST_CODE) {
             FavoriteStation station = (FavoriteStation) data.getSerializableExtra(EditFavoriteStationActivity.ITEM_FAVORITE_STATION);
 
@@ -101,22 +99,4 @@ public class FavoriteStationActivity extends Activity {
         adapter.addAll(FavoritesUtil.readFavorites(this));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.favorite_station, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

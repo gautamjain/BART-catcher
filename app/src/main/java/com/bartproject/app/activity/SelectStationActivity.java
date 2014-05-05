@@ -1,16 +1,5 @@
 package com.bartproject.app.activity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bartproject.app.R;
 import com.bartproject.app.model.Station;
 import com.bartproject.app.model.StationsResponse;
@@ -18,6 +7,15 @@ import com.bartproject.app.network.GetStationsRequest;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,6 @@ public class SelectStationActivity extends BaseActivity {
     TextView tvTitle;
     ListView lvStations;
     ArrayAdapter<Station> adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,27 +75,6 @@ public class SelectStationActivity extends BaseActivity {
         getSpiceManager().execute(request, cacheKey,
                 DurationInMillis.ONE_SECOND * 10, new GetStationsRequestListener());
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.select_station, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     private class GetStationsRequestListener implements RequestListener<StationsResponse> {
 
