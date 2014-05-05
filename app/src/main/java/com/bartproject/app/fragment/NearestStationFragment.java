@@ -25,7 +25,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import hugo.weaving.DebugLog;
 
@@ -44,7 +46,7 @@ public class NearestStationFragment extends Fragment
     private ListView lvNearestStationList;
     private EtdAdapter adapter;
     List<Etd> etdList;
-    List<String> trainHeadStationNames = new ArrayList<String>(0);
+    Set<String> trainHeadStationNames = new HashSet<String>();
 
     public NearestStationFragment() {
         // Required empty public constructor
@@ -106,14 +108,12 @@ public class NearestStationFragment extends Fragment
 
             List<Trip> tripInfo = departResponse.getSchedule().getRequest();
 
-            List<String> trainNames = new ArrayList<String>(10);
+            Set<String> trainNames = new HashSet<String>();
             for (Trip t : tripInfo)
             {
                 List<Leg> legsInfo = t.getLegs();
                 String trainHeadStationName = legsInfo.get(0).getTrainHeadStation();
                 trainNames.add(trainHeadStationName);
-
-
             }
             trainHeadStationNames = trainNames;
             filterArrivalTimes();
@@ -123,18 +123,27 @@ public class NearestStationFragment extends Fragment
 
     public void filterArrivalTimes() {
         List<Etd> filteredEtdList = new ArrayList<Etd>();
+
+        // Make sure etdList is not null - this may be the case at night when there are no more trains
+        if (etdList == null) {
+            return;
+        }
+
         for (Etd e : etdList)
         {
             for (String trainHeadStationName : trainHeadStationNames) {
-            if (e.getAbbrDest().equals(trainHeadStationName))
-                {
-                    filteredEtdList.add(e);
+                if (e.getAbbrDest().equals(trainHeadStationName))
+                    {
+                        Log.e(TAG, "Added to filtered list: " + e.getDestinationName());
+                        filteredEtdList.add(e);
+                    }
                 }
-            }
         }
 
-        if (filteredEtdList.size() != 0)
+        if (filteredEtdList.size() != 0) {
             etdList = filteredEtdList;
+            Log.d(TAG, "Replaced etdList with filteredEtdList");
+        }
 
     }
 
@@ -168,15 +177,17 @@ public class NearestStationFragment extends Fragment
         }
 
         @Override
-        public void onRequestSuccess(EtdResponse etdResponse)
-        {
+        public void onRequestSuccess(EtdResponse etdResponse) {
             Log.i(TAG, "Fetching arrival times successful");
 
-            adapter.clear();
-            etdList = etdResponse.getStationOrigin().getEtdList();
-            filterArrivalTimes();
-            adapter.addAll(etdList);
+            // Check to make sure EtdList is not null - this may happen at night when there are no more trains
+            if (etdResponse.getStationOrigin().getEtdList() != null) {
+                etdList = etdResponse.getStationOrigin().getEtdList();
+                filterArrivalTimes();
 
+                adapter.clear();
+                adapter.addAll(etdList);
+             }
         }
     }
 

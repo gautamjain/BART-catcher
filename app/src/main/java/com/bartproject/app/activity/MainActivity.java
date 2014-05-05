@@ -190,19 +190,13 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void onDestinationSelected(Station destination) {
         // This method is called when a destination station has been selected.
-        // At the momemnt, we don't need to do anything except show a toast.
-        // Eventually, we will launch a new activity that has detailed timings
-        // about your trip (from the nearest station to given destination station).
 
         Toast.makeText(this, destination.getName() + " was selected!", Toast.LENGTH_LONG ).show();
 
-        // you are using the same XML layout(fragment_nearest_station.xml) to filter the destination
-        // station list
-
-        NearestStationFragment filterDestination = (NearestStationFragment)
+        NearestStationFragment f = (NearestStationFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_container_middle);
 
-        filterDestination.setDestinationStation(closestStation, destination);
+        f.setDestinationStation(closestStation, destination);
     }
 
     // This func gives access to the middle fragment
@@ -215,16 +209,15 @@ public class MainActivity extends BaseActivity implements
         // Generatoe a random number
         int stationIndex = (int) (Math.random() * stations.size());
 
-        Station destination = new Station();
-        destination.setAbbr("RICH");
-
         // Select a random station from the list of stations
         Station station = stations.get(stationIndex);
+        closestStation = station;
         f.setStation(station);
-        f.setDestinationStation(station, destination);
+
+//        Station destination = new Station();
+//        destination.setAbbr("RICH");
+//        f.setDestinationStation(station, destination);
     }
-
-
 
     /*
      * Called by Location Services when the request to connect the
@@ -239,7 +232,6 @@ public class MainActivity extends BaseActivity implements
         // Start periodic updates
         mLocationClient.requestLocationUpdates(mLocationRequest, this);
     }
-
 
     /*
      * Called by Location Services if the connection to the
@@ -277,17 +269,11 @@ public class MainActivity extends BaseActivity implements
     }
 
     public void setClosestStation(Station closestStation) {
-        // FOR TESTING ONLY : Create a fake destination station
-        // Remove this later
-        Station destination = new Station();
-        destination.setAbbr("RICH");
-
         // Update fragment with closest station
         NearestStationFragment f = (NearestStationFragment)
                 getFragmentManager().findFragmentById(R.id.fragment_container_middle);
 
         f.setStation(closestStation);
-        f.setDestinationStation(closestStation, destination);
 
         // Update Map
         LatLng coordinates = new LatLng(closestStation.getGtfs_latitude(),

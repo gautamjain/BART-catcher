@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -32,23 +33,6 @@ public class FavoriteStationsGridFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // TODO: Setup a GridView and adapter
-        // Read the two preferences arrays from the SharedPreferences and load data into the adapter
-        // First array should contain a list of 'favorite station labels', i.e. Home, Work, School, etc.
-        // Second array should contain a list (of the same size) of corresponding 'favorite stations', i.e. Powell, Berkeley, Fremont
-
-        // TODO: XML Layouts
-        // Create a layout file for this fragment.  Should include a title, e.g. 'Where are you going?' and a GridView
-        // Also need to create a layout file for the GridView's individual items. Will probably contain two TextViews.
-
-        // TODO: Register an onItemClickListener
-        // Should call onDestinationSelected
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -57,6 +41,13 @@ public class FavoriteStationsGridFragment extends Fragment {
         gvFavorites = (GridView) view.findViewById(R.id.gvFavorites);
         adapter = new FavoritesAdapter(getActivity(), new ArrayList<FavoriteStation>(0));
         gvFavorites.setAdapter(adapter);
+
+        gvFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                onDestinationSelected(adapter.getItem(position));
+            }
+        });
 
         return view;
     }
@@ -70,11 +61,9 @@ public class FavoriteStationsGridFragment extends Fragment {
         adapter.addAll(FavoritesUtil.readFavorites(getActivity()));
     }
 
-    public void onDestinationSelected(Station destination) {
-        // TODO: Report the selected destination back to the parent Activity (i.e. mListener).  May have to change arguments.
-
+    public void onDestinationSelected(FavoriteStation destination) {
         if (mListener != null) {
-            mListener.onDestinationSelected(destination);
+            mListener.onDestinationSelected(destination.getStation());
         }
     }
 
