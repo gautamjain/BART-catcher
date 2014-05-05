@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="com.bartproject.app.ApiTesterFragment">
+    tools:context="com.bartproject.app.fragment.ApiTesterFragment">
 
     <Button
         android:id="@+id/btnFetchEtd"

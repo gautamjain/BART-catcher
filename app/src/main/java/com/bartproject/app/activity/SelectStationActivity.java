@@ -1,4 +1,4 @@
-package com.bartproject.app;
+package com.bartproject.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bartproject.app.R;
 import com.bartproject.app.model.Station;
 import com.bartproject.app.model.StationsResponse;
 import com.bartproject.app.network.GetStationsRequest;

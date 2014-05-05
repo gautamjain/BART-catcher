@@ -1,5 +1,6 @@
-package com.bartproject.app;
+package com.bartproject.app.activity;
 
+import com.bartproject.app.R;
 import com.bartproject.app.model.FavoriteStation;
 import com.bartproject.app.model.Station;
 

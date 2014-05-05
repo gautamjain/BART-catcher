@@ -1,4 +1,4 @@
-package com.bartproject.app;
+package com.bartproject.app.activity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -12,6 +12,11 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import com.bartproject.app.fragment.FavoriteStationsGridFragment;
+import com.bartproject.app.fragment.NearestStationFragment;
+import com.bartproject.app.R;
+import com.bartproject.app.util.StationsUtil;
+import com.bartproject.app.util.Util;
 import com.bartproject.app.model.Station;
 import com.bartproject.app.model.StationsResponse;
 import com.bartproject.app.network.GetStationsRequest;

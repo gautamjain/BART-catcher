@@ -1,4 +1,4 @@
-package com.bartproject.app;
+package com.bartproject.app.activity;
 
 import com.bartproject.app.network.ApiService;
 import com.octo.android.robospice.SpiceManager;

@@ -1,4 +1,4 @@
-package com.bartproject.app;
+package com.bartproject.app.util;
 
 import com.bartproject.app.model.Station;
 

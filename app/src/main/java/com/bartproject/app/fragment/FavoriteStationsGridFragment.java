@@ -1,5 +1,8 @@
-package com.bartproject.app;
+package com.bartproject.app.fragment;
 
+import com.bartproject.app.FavoritesAdapter;
+import com.bartproject.app.util.FavoritesUtil;
+import com.bartproject.app.R;
 import com.bartproject.app.model.FavoriteStation;
 import com.bartproject.app.model.Station;
 

@@ -1,12 +1,14 @@
-package com.bartproject.app;
+package com.bartproject.app.activity;
 
-import android.support.v7.app.ActionBarActivity;
+import com.bartproject.app.R;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class PreviousDestinations extends ActionBarActivity {
+public class PreviousDestinationsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

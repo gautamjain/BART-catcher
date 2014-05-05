@@ -1,5 +1,7 @@
-package com.bartproject.app;
+package com.bartproject.app.fragment;
 
+import com.bartproject.app.R;
+import com.bartproject.app.activity.MainActivity;
 import com.bartproject.app.model.Depart;
 import com.bartproject.app.model.Etd;
 import com.bartproject.app.model.EtdResponse;
