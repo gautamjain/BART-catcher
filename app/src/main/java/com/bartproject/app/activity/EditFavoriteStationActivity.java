@@ -1,9 +1,5 @@
 package com.bartproject.app.activity;
 
-import com.bartproject.app.R;
-import com.bartproject.app.model.FavoriteStation;
-import com.bartproject.app.model.Station;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bartproject.app.R;
+import com.bartproject.app.model.FavoriteStation;
+import com.bartproject.app.model.Station;
 
 
 public class EditFavoriteStationActivity extends Activity
@@ -43,14 +44,21 @@ public class EditFavoriteStationActivity extends Activity
             public void onClick(View v) {
                 String favoriteName = etFavoriteName.getText().toString();
 
-                FavoriteStation favoriteStation = new FavoriteStation(favoriteName, station);
-                // TODO: Check if empty and not let the user continue
-
-                Intent data = new Intent();
-
-                data.putExtra(ITEM_FAVORITE_STATION, favoriteStation);
-                setResult(RESULT_OK, data);
-                finish();
+                //.equals didn't work for editText
+                //Check if empty and not let the user continue
+                if (favoriteName.matches(""))
+                {
+                    Toast.makeText(getBaseContext(),"Enter Favorite Name",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else
+                {
+                    FavoriteStation favoriteStation = new FavoriteStation(favoriteName, station);
+                    Intent data = new Intent();
+                    data.putExtra(ITEM_FAVORITE_STATION, favoriteStation);
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
             }
         });
     }
