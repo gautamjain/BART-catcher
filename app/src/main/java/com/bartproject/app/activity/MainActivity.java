@@ -12,18 +12,19 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import com.bartproject.app.R;
 import com.bartproject.app.fragment.FavoriteStationsGridFragment;
 import com.bartproject.app.fragment.NearestStationFragment;
-import com.bartproject.app.R;
-import com.bartproject.app.util.StationsUtil;
-import com.bartproject.app.util.Util;
 import com.bartproject.app.model.Station;
 import com.bartproject.app.model.StationsResponse;
 import com.bartproject.app.network.GetStationsRequest;
+import com.bartproject.app.util.StationsUtil;
+import com.bartproject.app.util.Util;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -192,12 +193,24 @@ public class MainActivity extends BaseActivity implements
         // This method is called when a destination station has been selected.
 
         Toast.makeText(this, destination.getName() + " was selected!", Toast.LENGTH_LONG ).show();
+        FragmentManager fm = getFragmentManager();
 
-        NearestStationFragment f = (NearestStationFragment)
-                getFragmentManager().findFragmentById(R.id.fragment_container_middle);
+        // Create new fragment for middle area
+        NearestStationFragment newMiddleFragment = NearestStationFragment.newInstance(closestStation, destination);
 
-        f.setDestinationStation(closestStation, destination);
+        // Hide favorites grid fragment
+        FavoriteStationsGridFragment bottomFrag = (FavoriteStationsGridFragment) fm.findFragmentById(
+                R.id.fragment_container_bottom);
+
+        fm.beginTransaction()
+                .replace(R.id.fragment_container_middle, newMiddleFragment)
+                .remove(bottomFrag)
+                .addToBackStack(null)
+                .commit();
+
     }
+
+
 
     // This func gives access to the middle fragment
     // This function will be called once we get the location of the GPS co-ords

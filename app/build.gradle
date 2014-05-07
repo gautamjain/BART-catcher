@@ -35,14 +35,17 @@ dependencies {
     compile 'org.apache.commons:commons-io:1.3.2'
     compile 'org.apache.commons:commons-lang3:3.2.1'
     compile 'com.squareup.retrofit:retrofit:1.5.0'
+    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.android.support:support-v4:+'
     compile('com.squareup.retrofit:converter-simplexml:1.5.0') {
         exclude module: 'stax'
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
 
-    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
-    compile 'com.google.code.gson:gson:2.2.4'
+
+    
 
     // JAR files
     compile fileTree(dir: 'libs', include: ['*.jar'])

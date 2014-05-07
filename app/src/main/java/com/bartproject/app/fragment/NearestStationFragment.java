@@ -42,14 +42,33 @@ public class NearestStationFragment extends Fragment
 
     public static final String TAG = NearestStationFragment.class.getSimpleName();
 
+    private static final String ARGS_ORIGIN = "ARGS_ORIGIN";
+
+    private static final String ARGS_DESTINATION = "ARGS_DESTINATION";
+
     private TextView tvStationTitle;
     private ListView lvNearestStationList;
     private EtdAdapter adapter;
     List<Etd> etdList;
     Set<String> trainHeadStationNames = new HashSet<String>();
 
+    Station origin;
+    Station destination;
+
     public NearestStationFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+
+        if (args != null) {
+            origin = (Station) args.getSerializable(ARGS_ORIGIN);
+            destination = (Station) args.getSerializable(ARGS_DESTINATION);
+        }
     }
 
     @Override
@@ -69,9 +88,25 @@ public class NearestStationFragment extends Fragment
         return nearestStationView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (origin != null) {
+            setStation(origin);
+
+            if (destination != null) {
+                setDestinationStation(origin, destination);
+            }
+        }
+
+    }
+
     @DebugLog
     public void setDestinationStation(Station origin, Station destStation)
     {
+        setStation(origin);
+
         // Create a request object from depart cmd for the TrainHeadStation info.
         GetDepartTrainHeadStationRequest request =
                 new GetDepartTrainHeadStationRequest(origin.getAbbr(), destStation.getAbbr());
@@ -83,6 +118,17 @@ public class NearestStationFragment extends Fragment
         // Set the cache duration for 10 seconds
         ((MainActivity) getActivity()).getSpiceManager().execute(request, cacheKey,
                 DurationInMillis.ONE_SECOND * 10, new GetDepartTrainHeadStationRequestListener());
+    }
+
+    public static NearestStationFragment newInstance(Station closestStation, Station destination) {
+        NearestStationFragment f = new NearestStationFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARGS_ORIGIN, closestStation);
+        args.putSerializable(ARGS_DESTINATION, destination);
+
+        f.setArguments(args);
+
+        return f;
     }
 
 
