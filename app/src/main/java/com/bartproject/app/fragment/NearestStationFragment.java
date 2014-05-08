@@ -1,5 +1,14 @@
 package com.bartproject.app.fragment;
 
+import android.app.Fragment;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.bartproject.app.R;
 import com.bartproject.app.activity.MainActivity;
 import com.bartproject.app.model.Depart;
@@ -14,15 +23,6 @@ import com.bartproject.app.network.GetDepartTrainHeadStationRequest;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
-import android.app.Fragment;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -209,7 +209,11 @@ public class NearestStationFragment extends Fragment
                 DurationInMillis.ONE_SECOND * 10, new GetArrivalTimesRequestListener());
 
         //Set the station title (TextView) of this fragment to the station's name.E.g. station.getName();
-        tvStationTitle.setText(station.getName());
+        // Example Powell to 24th
+        if (destination !=null)
+            tvStationTitle.setText(station.getName() + " To " + destination);
+        else
+            tvStationTitle.setText(station.getName());
     }
 
 

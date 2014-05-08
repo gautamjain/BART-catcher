@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvStationTitle"
             android:layout_gravity="center_horizontal"
-            android:textSize="24dp"
+            android:textSize="20dp"
             android:textColor="#33B5E5"
             android:text="Title"
             android:padding="5dp"
