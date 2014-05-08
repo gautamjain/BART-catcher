@@ -21,7 +21,7 @@ public class GetDepartTrainHeadStationRequest extends RetrofitSpiceRequest<Depar
     }
 
     public String createCacheKey() {
-        return GetDepartTrainHeadStationRequest.class.getName();
+        return GetDepartTrainHeadStationRequest.class.getName() + origin + destination;
     }
 
 

@@ -192,7 +192,6 @@ public class MainActivity extends BaseActivity implements
     public void onDestinationSelected(Station destination) {
         // This method is called when a destination station has been selected.
 
-        Toast.makeText(this, destination.getName() + " was selected!", Toast.LENGTH_LONG ).show();
         FragmentManager fm = getFragmentManager();
 
         // Create new fragment for middle area

@@ -1,14 +1,5 @@
 package com.bartproject.app.fragment;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.bartproject.app.R;
 import com.bartproject.app.activity.MainActivity;
 import com.bartproject.app.model.Depart;
@@ -24,7 +15,18 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import android.app.Fragment;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,7 +119,7 @@ public class NearestStationFragment extends Fragment
         // Execute the network request
         // Set the cache duration for 10 seconds
         ((MainActivity) getActivity()).getSpiceManager().execute(request, cacheKey,
-                DurationInMillis.ONE_SECOND * 10, new GetDepartTrainHeadStationRequestListener());
+                DurationInMillis.ONE_MINUTE * 10, new GetDepartTrainHeadStationRequestListener());
     }
 
     public static NearestStationFragment newInstance(Station closestStation, Station destination) {
@@ -194,6 +196,24 @@ public class NearestStationFragment extends Fragment
 
     }
 
+    public void sortArrivaltimes() {
+        Collections.sort(etdList, new Comparator<Etd>() {
+            @Override
+            public int compare(Etd etd1, Etd etd2) {
+                String e1 = etd1.getEstimatesList().get(0).getMinutes();
+                String e2 = etd2.getEstimatesList().get(0).getMinutes();
+
+                if (e1.equals("Leaving"))
+                    e1 = "0";
+
+                if (e2.equals("Leaving"))
+                    e2 = "0";
+
+                return Integer.valueOf(e1) - Integer.valueOf(e2);
+            }
+        });
+    }
+
     @DebugLog
     public void setStation(Station station)
     {
@@ -211,7 +231,7 @@ public class NearestStationFragment extends Fragment
         //Set the station title (TextView) of this fragment to the station's name.E.g. station.getName();
         // Example Powell to 24th
         if (destination !=null)
-            tvStationTitle.setText(station.getName() + " To " + destination);
+            tvStationTitle.setText(station.getName() + " to\n" + destination.getName());
         else
             tvStationTitle.setText(station.getName());
     }
@@ -235,6 +255,8 @@ public class NearestStationFragment extends Fragment
             if (etdResponse.getStationOrigin().getEtdList() != null) {
                 etdList = etdResponse.getStationOrigin().getEtdList();
                 filterArrivalTimes();
+
+                sortArrivaltimes();
 
                 adapter.clear();
                 adapter.addAll(etdList);
