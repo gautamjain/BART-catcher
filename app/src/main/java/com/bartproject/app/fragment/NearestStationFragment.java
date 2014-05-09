@@ -65,6 +65,8 @@ public class NearestStationFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.e(TAG, NearestStationFragment.class.getSimpleName() + " - onCreate");
+
         Bundle args = getArguments();
 
         if (args != null) {
@@ -78,6 +80,8 @@ public class NearestStationFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        Log.e(TAG, NearestStationFragment.class.getSimpleName() + " - onCreateView");
+
         View nearestStationView = inflater.inflate(R.layout.fragment_nearest_station, container, false);
         tvStationTitle = (TextView) nearestStationView.findViewById(R.id.tvStationTitle);
         lvNearestStationList =
@@ -90,9 +94,19 @@ public class NearestStationFragment extends Fragment
         return nearestStationView;
     }
 
-    @Override
+    @DebugLog
     public void onStart() {
         super.onStart();
+
+        Log.e(TAG, NearestStationFragment.class.getSimpleName() + " - onStart");
+    }
+
+    @DebugLog
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.e(TAG, NearestStationFragment.class.getSimpleName() + " - onResume");
 
         if (origin != null) {
             setStation(origin);
@@ -100,6 +114,8 @@ public class NearestStationFragment extends Fragment
             if (destination != null) {
                 setDestinationStation(origin, destination);
             }
+        } else {
+            Log.e(TAG, "ORIGIN is NULL");
         }
 
     }
@@ -119,7 +135,7 @@ public class NearestStationFragment extends Fragment
         // Execute the network request
         // Set the cache duration for 10 seconds
         ((MainActivity) getActivity()).getSpiceManager().execute(request, cacheKey,
-                DurationInMillis.ONE_MINUTE * 10, new GetDepartTrainHeadStationRequestListener());
+                DurationInMillis.ONE_MINUTE * 30, new GetDepartTrainHeadStationRequestListener());
     }
 
     public static NearestStationFragment newInstance(Station closestStation, Station destination) {
