@@ -24,6 +24,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.location.Location;
@@ -47,7 +48,7 @@ public class MainActivity extends BaseActivity implements
     private static final int MILLISECONDS_PER_SECOND = 1000;
 
     // Update frequency in seconds
-    public static final int UPDATE_INTERVAL_IN_SECONDS = 15;
+    public static final int UPDATE_INTERVAL_IN_SECONDS = 10;
 
     // Update frequency in milliseconds
     private static final long UPDATE_INTERVAL = MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
@@ -197,13 +198,16 @@ public class MainActivity extends BaseActivity implements
         // Create new fragment for middle area
         NearestStationFragment newMiddleFragment = NearestStationFragment.newInstance(closestStation, destination);
 
+        Fragment middleFragment = fm.findFragmentById(R.id.fragment_container_middle);
+
         // Hide favorites grid fragment
         FavoriteStationsGridFragment bottomFrag = (FavoriteStationsGridFragment) fm.findFragmentById(
                 R.id.fragment_container_bottom);
 
         fm.beginTransaction()
-                .replace(R.id.fragment_container_middle, newMiddleFragment)
-                .remove(bottomFrag)
+                .hide(middleFragment)
+                .add(R.id.fragment_container_middle, newMiddleFragment)
+                .hide(bottomFrag)
                 .addToBackStack(null)
                 .commit();
 
@@ -239,8 +243,8 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void onConnected(Bundle dataBundle) {
         // Display the connection status
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-
+//        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Connected to Google Play Services");
         // Start periodic updates
         mLocationClient.requestLocationUpdates(mLocationRequest, this);
     }
